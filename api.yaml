@@ -1,0 +1,65 @@
+openapi: 3.0.1
+servers:
+  - url: 'http://relampago.cash/api/v1'
+info:
+  description: These are specifications for using the Relampago API.
+  version: 1.0.0
+  title: Relampago API Specifications
+tags:
+  - name: lightning
+paths:
+  /order:
+    post:
+      tags:
+      - lightning
+      description: Requests a lightning invoice is generated for some receiver.
+      operationId: requestLightningInvoice
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RequestLightningInvoicePayload"
+      requestBody:
+        $ref: '#/components/requestBodies/LightningInvoiceRequest'
+components:
+  requestBodies:
+    LightningInvoiceRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/LightningInvoiceRequest'
+      description: List of user object
+      required: true
+  schemas:
+    RequestLightningInvoicePayload:
+      title: Lightning Invoice Request
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+    LightningInvoiceRequest:
+      title: Lightning Invoice Request
+      description: A lightning invoice request
+      type: object
+      required:
+        - amount
+        - name
+        - clabe
+      properties:
+        amount:
+          type: integer
+          format: uint256
+          description: Number of LN Satoshis to send to the end-user.
+          example: 100
+        name:
+          type: string
+          description: Bank name of the end-user.
+          example: "Jonathan Smith"
+        clabe:
+          type: integer
+          format: float64
+          description: Clabe identifier of the end-user.
+          example: 123123423535

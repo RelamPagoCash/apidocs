@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Relámpago API Specifications</title>
+  <title>Relampago API Specifications</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta charset="UTF-8" />
@@ -589,12 +589,12 @@ pre code.sample-request-response-json {
   font-family: "Source Sans Pro", sans-serif;
   font-weight: 700;
   font-size: 16px;
-  background-color: #4c8eca;
+  background-color: #4c8eca !important;
   color: #fff;
 }
 
 .sidenav > li.nav-header.active > a {
-  background-color: #4c8eca;
+  background-color: #4c8eca !important;
   color: #fff;
 }
 
@@ -846,21 +846,39 @@ ul.nav-tabs {
   <script>
     // Script section to load models into a JS Var
     var defs = {}
-    defs["LightningPayload"] = {
-  "title" : "Lightning Info",
+    defs["LightningInvoiceRequest"] = {
+  "title" : "Lightning Invoice Request",
+  "required" : [ "amount", "clabe", "name" ],
   "type" : "object",
   "properties" : {
-    "id" : {
-      "type" : "string",
-      "example" : "light1234"
+    "amount" : {
+      "type" : "integer",
+      "description" : "Number of LN Satoshis to send to the end-user.",
+      "format" : "uint256",
+      "example" : 100
     },
     "name" : {
-      "type" : "uint64",
-      "example" : 132456443254
+      "type" : "string",
+      "description" : "Bank name of the end-user.",
+      "example" : "Jonathan Smith"
+    },
+    "clabe" : {
+      "type" : "integer",
+      "description" : "Clabe identifier of the end-user.",
+      "format" : "float64",
+      "example" : 123123423535
     }
   },
-  "xml" : {
-    "name" : "Tag"
+  "description" : "A lightning invoice request"
+};
+    defs["RequestLightningInvoicePayload"] = {
+  "title" : "Lightning Invoice Request",
+  "type" : "object",
+  "properties" : {
+    "success" : {
+      "type" : "boolean",
+      "example" : true
+    }
   }
 };
 
@@ -882,8 +900,8 @@ ul.nav-tabs {
             <li class="nav-fixed nav-header active" data-group="_"><a href="#api-_">API Summary</a></li>
 
                   <li class="nav-header" data-group="Lightning"><a href="#api-Lightning">API Methods - Lightning</a></li>
-                    <li data-group="Lightning" data-name="getLightningInfo" class="">
-                      <a href="#api-Lightning-getLightningInfo">getLightningInfo</a>
+                    <li data-group="Lightning" data-name="requestLightningInvoice" class="">
+                      <a href="#api-Lightning-requestLightningInvoice">requestLightningInvoice</a>
                     </li>
           </ul>
         </nav>
@@ -891,7 +909,7 @@ ul.nav-tabs {
       <div id="content">
         <div id="project">
           <div class="pull-left">
-            <h1>Relámpago API Specifications</h1>
+            <h1>Relampago API Specifications</h1>
           </div>
           <div class="clearfix"></div>
         </div>
@@ -901,52 +919,58 @@ ul.nav-tabs {
               <div class="app-desc">Version: 1.0.0</div>
             <hr>
             <div id="app-description" class="app-desc">
-                These are specifications for using the Relámpago API.
+                These are specifications for using the Relampago API.
             </div>
           </div>
         </div>
         <div id="sections">
                 <section id="api-Lightning">
                   <h1>Lightning</h1>
-                    <div id="api-Lightning-getLightningInfo">
-                      <article id="api-Lightning-getLightningInfo-0" data-group="User" data-name="getLightningInfo" data-version="0">
+                    <div id="api-Lightning-requestLightningInvoice">
+                      <article id="api-Lightning-requestLightningInvoice-0" data-group="User" data-name="requestLightningInvoice" data-version="0">
                         <div class="pull-left">
-                          <h1>getLightningInfo</h1>
-                          <p>Get lightning info.</p>
+                          <h1>requestLightningInvoice</h1>
+                          <p></p>
                         </div>
                         <div class="pull-right"></div>
                         <div class="clearfix"></div>
                         <p></p>
-                        <p class="marked">Fetches the most recent lightning info.</p>
+                        <p class="marked">Requests a lightning invoice is generated for some receiver.</p>
                         <p></p>
                         <br />
-                        <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/lightning</span></code></pre>
+                        <pre class="prettyprint language-html prettyprinted" data-type="post"><code><span class="pln">/order</span></code></pre>
                         <p>
                           <h3>Usage and SDK Samples</h3>
                         </p>
                         <ul class="nav nav-tabs nav-tabs-examples">
-                          <li class="active"><a href="#examples-Lightning-getLightningInfo-0-curl">Curl</a></li>
-                          <!--li class=""><a href="#examples-Lightning-getLightningInfo-0-java">Java</a></li-->
-                          <!--li class=""><a href="#examples-Lightning-getLightningInfo-0-android">Android</a></li-->
-                          <!--<li class=""><a href="#examples-Lightning-getLightningInfo-0-groovy">Groovy</a></li>-->
-                          <!--li class=""><a href="#examples-Lightning-getLightningInfo-0-objc">Obj-C</a></li-->
-                          <!--li class=""><a href="#examples-Lightning-getLightningInfo-0-javascript">JavaScript</a></li-->
-                          <!--<li class=""><a href="#examples-Lightning-getLightningInfo-0-angular">Angular</a></li>-->
-                          <!--li class=""><a href="#examples-Lightning-getLightningInfo-0-csharp">C#</a></li-->
-                          <!--li class=""><a href="#examples-Lightning-getLightningInfo-0-php">PHP</a></li-->
-                          <!--li class=""><a href="#examples-Lightning-getLightningInfo-0-perl">Perl</a></li-->
-                          <!--li class=""><a href="#examples-Lightning-getLightningInfo-0-python">Python</a></li-->
-                          <!--li class=""><a href="#examples-Lightning-getLightningInfo-0-rust">Rust</a></li-->
+                          <li class="active"><a href="#examples-Lightning-requestLightningInvoice-0-curl">Curl</a></li>
+                          <!--li class=""><a href="#examples-Lightning-requestLightningInvoice-0-java">Java</a></li-->
+                          <!--li class=""><a href="#examples-Lightning-requestLightningInvoice-0-android">Android</a></li-->
+                          <!--<li class=""><a href="#examples-Lightning-requestLightningInvoice-0-groovy">Groovy</a></li>-->
+                          <!--li class=""><a href="#examples-Lightning-requestLightningInvoice-0-objc">Obj-C</a></li-->
+                          <!--li class=""><a href="#examples-Lightning-requestLightningInvoice-0-javascript">JavaScript</a></li-->
+                          <!--<li class=""><a href="#examples-Lightning-requestLightningInvoice-0-angular">Angular</a></li>-->
+                          <!--li class=""><a href="#examples-Lightning-requestLightningInvoice-0-csharp">C#</a></li-->
+                          <!--li class=""><a href="#examples-Lightning-requestLightningInvoice-0-php">PHP</a></li-->
+                          <!--li class=""><a href="#examples-Lightning-requestLightningInvoice-0-perl">Perl</a></li-->
+                          <!--li class=""><a href="#examples-Lightning-requestLightningInvoice-0-python">Python</a></li-->
+                          <!--li class=""><a href="#examples-Lightning-requestLightningInvoice-0-rust">Rust</a></li-->
                         </ul>
 
                         <div class="tab-content">
-                          <div class="tab-pane active" id="examples-Lightning-getLightningInfo-0-curl">
-                            <pre class="prettyprint"><code class="language-bsh">curl -X GET \
+                          <div class="tab-pane active" id="examples-Lightning-requestLightningInvoice-0-curl">
+                            <pre class="prettyprint"><code class="language-bsh">curl -X POST \
  -H "Accept: application/json" \
- "http://relampago.cash/api/v1/lightning"
+ -H "Content-Type: application/json" \
+ "http://relampago.cash/api/v1/order" \
+ -d '{
+  &quot;amount&quot; : 100,
+  &quot;name&quot; : &quot;Jonathan Smith&quot;,
+  &quot;clabe&quot; : 123123423535
+}'
 </code></pre>
                           </div>
-                          <div class="tab-pane" id="examples-Lightning-getLightningInfo-0-java">
+                          <div class="tab-pane" id="examples-Lightning-requestLightningInvoice-0-java">
                             <pre class="prettyprint"><code class="language-java">import org.openapitools.client.*;
 import org.openapitools.client.auth.*;
 import org.openapitools.client.model.*;
@@ -960,12 +984,13 @@ public class LightningApiExample {
 
         // Create an instance of the API class
         LightningApi apiInstance = new LightningApi();
+        LightningInvoiceRequest lightningInvoiceRequest = ; // LightningInvoiceRequest | 
 
         try {
-            LightningPayload result = apiInstance.getLightningInfo();
+            RequestLightningInvoicePayload result = apiInstance.requestLightningInvoice(lightningInvoiceRequest);
             System.out.println(result);
         } catch (ApiException e) {
-            System.err.println("Exception when calling LightningApi#getLightningInfo");
+            System.err.println("Exception when calling LightningApi#requestLightningInvoice");
             e.printStackTrace();
         }
     }
@@ -973,36 +998,37 @@ public class LightningApiExample {
 </code></pre>
                           </div>
 
-                          <div class="tab-pane" id="examples-Lightning-getLightningInfo-0-android">
+                          <div class="tab-pane" id="examples-Lightning-requestLightningInvoice-0-android">
                             <pre class="prettyprint"><code class="language-java">import org.openapitools.client.api.LightningApi;
 
 public class LightningApiExample {
     public static void main(String[] args) {
         LightningApi apiInstance = new LightningApi();
+        LightningInvoiceRequest lightningInvoiceRequest = ; // LightningInvoiceRequest | 
 
         try {
-            LightningPayload result = apiInstance.getLightningInfo();
+            RequestLightningInvoicePayload result = apiInstance.requestLightningInvoice(lightningInvoiceRequest);
             System.out.println(result);
         } catch (ApiException e) {
-            System.err.println("Exception when calling LightningApi#getLightningInfo");
+            System.err.println("Exception when calling LightningApi#requestLightningInvoice");
             e.printStackTrace();
         }
     }
 }</code></pre>
                           </div>
   <!--
-  <div class="tab-pane" id="examples-Lightning-getLightningInfo-0-groovy">
+  <div class="tab-pane" id="examples-Lightning-requestLightningInvoice-0-groovy">
   <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
   </div> -->
-                            <div class="tab-pane" id="examples-Lightning-getLightningInfo-0-objc">
+                            <div class="tab-pane" id="examples-Lightning-requestLightningInvoice-0-objc">
                               <pre class="prettyprint"><code class="language-cpp">
 
 // Create an instance of the API class
 LightningApi *apiInstance = [[LightningApi alloc] init];
+LightningInvoiceRequest *lightningInvoiceRequest = ; // 
 
-// Get lightning info.
-[apiInstance getLightningInfoWithCompletionHandler: 
-              ^(LightningPayload output, NSError* error) {
+[apiInstance requestLightningInvoiceWith:lightningInvoiceRequest
+              completionHandler: ^(RequestLightningInvoicePayload output, NSError* error) {
     if (output) {
         NSLog(@"%@", output);
     }
@@ -1013,11 +1039,13 @@ LightningApi *apiInstance = [[LightningApi alloc] init];
 </code></pre>
                             </div>
 
-                            <div class="tab-pane" id="examples-Lightning-getLightningInfo-0-javascript">
-                              <pre class="prettyprint"><code class="language-js">var RelmpagoApiSpecifications = require('relmpago_api_specifications');
+                            <div class="tab-pane" id="examples-Lightning-requestLightningInvoice-0-javascript">
+                              <pre class="prettyprint"><code class="language-js">var RelampagoApiSpecifications = require('relampago_api_specifications');
 
 // Create an instance of the API class
-var api = new RelmpagoApiSpecifications.LightningApi()
+var api = new RelampagoApiSpecifications.LightningApi()
+var lightningInvoiceRequest = ; // {LightningInvoiceRequest} 
+
 var callback = function(error, data, response) {
   if (error) {
     console.error(error);
@@ -1025,14 +1053,14 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-api.getLightningInfo(callback);
+api.requestLightningInvoice(lightningInvoiceRequest, callback);
 </code></pre>
                             </div>
 
-                            <!--<div class="tab-pane" id="examples-Lightning-getLightningInfo-0-angular">
+                            <!--<div class="tab-pane" id="examples-Lightning-requestLightningInvoice-0-angular">
               <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
             </div>-->
-                            <div class="tab-pane" id="examples-Lightning-getLightningInfo-0-csharp">
+                            <div class="tab-pane" id="examples-Lightning-requestLightningInvoice-0-csharp">
                               <pre class="prettyprint"><code class="language-cs">using System;
 using System.Diagnostics;
 using Org.OpenAPITools.Api;
@@ -1041,20 +1069,20 @@ using Org.OpenAPITools.Model;
 
 namespace Example
 {
-    public class getLightningInfoExample
+    public class requestLightningInvoiceExample
     {
         public void main()
         {
 
             // Create an instance of the API class
             var apiInstance = new LightningApi();
+            var lightningInvoiceRequest = new LightningInvoiceRequest(); // LightningInvoiceRequest | 
 
             try {
-                // Get lightning info.
-                LightningPayload result = apiInstance.getLightningInfo();
+                RequestLightningInvoicePayload result = apiInstance.requestLightningInvoice(lightningInvoiceRequest);
                 Debug.WriteLine(result);
             } catch (Exception e) {
-                Debug.Print("Exception when calling LightningApi.getLightningInfo: " + e.Message );
+                Debug.Print("Exception when calling LightningApi.requestLightningInvoice: " + e.Message );
             }
         }
     }
@@ -1062,40 +1090,42 @@ namespace Example
 </code></pre>
                             </div>
 
-                            <div class="tab-pane" id="examples-Lightning-getLightningInfo-0-php">
+                            <div class="tab-pane" id="examples-Lightning-requestLightningInvoice-0-php">
                               <pre class="prettyprint"><code class="language-php"><&#63;php
 require_once(__DIR__ . '/vendor/autoload.php');
 
 // Create an instance of the API class
 $api_instance = new OpenAPITools\Client\Api\LightningApi();
+$lightningInvoiceRequest = ; // LightningInvoiceRequest | 
 
 try {
-    $result = $api_instance->getLightningInfo();
+    $result = $api_instance->requestLightningInvoice($lightningInvoiceRequest);
     print_r($result);
 } catch (Exception $e) {
-    echo 'Exception when calling LightningApi->getLightningInfo: ', $e->getMessage(), PHP_EOL;
+    echo 'Exception when calling LightningApi->requestLightningInvoice: ', $e->getMessage(), PHP_EOL;
 }
 ?></code></pre>
                             </div>
 
-                            <div class="tab-pane" id="examples-Lightning-getLightningInfo-0-perl">
+                            <div class="tab-pane" id="examples-Lightning-requestLightningInvoice-0-perl">
                               <pre class="prettyprint"><code class="language-perl">use Data::Dumper;
 use WWW::OPenAPIClient::Configuration;
 use WWW::OPenAPIClient::LightningApi;
 
 # Create an instance of the API class
 my $api_instance = WWW::OPenAPIClient::LightningApi->new();
+my $lightningInvoiceRequest = WWW::OPenAPIClient::Object::LightningInvoiceRequest->new(); # LightningInvoiceRequest | 
 
 eval {
-    my $result = $api_instance->getLightningInfo();
+    my $result = $api_instance->requestLightningInvoice(lightningInvoiceRequest => $lightningInvoiceRequest);
     print Dumper($result);
 };
 if ($@) {
-    warn "Exception when calling LightningApi->getLightningInfo: $@\n";
+    warn "Exception when calling LightningApi->requestLightningInvoice: $@\n";
 }</code></pre>
                             </div>
 
-                            <div class="tab-pane" id="examples-Lightning-getLightningInfo-0-python">
+                            <div class="tab-pane" id="examples-Lightning-requestLightningInvoice-0-python">
                               <pre class="prettyprint"><code class="language-python">from __future__ import print_statement
 import time
 import openapi_client
@@ -1104,22 +1134,23 @@ from pprint import pprint
 
 # Create an instance of the API class
 api_instance = openapi_client.LightningApi()
+lightningInvoiceRequest =  # LightningInvoiceRequest | 
 
 try:
-    # Get lightning info.
-    api_response = api_instance.get_lightning_info()
+    api_response = api_instance.request_lightning_invoice(lightningInvoiceRequest)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling LightningApi->getLightningInfo: %s\n" % e)</code></pre>
+    print("Exception when calling LightningApi->requestLightningInvoice: %s\n" % e)</code></pre>
                             </div>
 
-                            <div class="tab-pane" id="examples-Lightning-getLightningInfo-0-rust">
+                            <div class="tab-pane" id="examples-Lightning-requestLightningInvoice-0-rust">
                               <pre class="prettyprint"><code class="language-rust">extern crate LightningApi;
 
 pub fn main() {
+    let lightningInvoiceRequest = ; // LightningInvoiceRequest
 
     let mut context = LightningApi::Context::default();
-    let result = client.getLightningInfo(&context).wait();
+    let result = client.requestLightningInvoice(lightningInvoiceRequest, &context).wait();
 
     println!("{:?}", result);
 }
@@ -1136,27 +1167,74 @@ pub fn main() {
 
 
 
+                            <div class="methodsubtabletitle">Body parameters</div>
+                            <table id="methodsubtable">
+                              <tr>
+                                <th width="150px">Name</th>
+                                <th>Description</th>
+                              </tr>
+                                <tr><td style="width:150px;">lightningInvoiceRequest <span style="color:red;">*</span></td>
+<td>
+<p class="marked">List of user object</p>
+<script>
+$(document).ready(function() {
+  var schemaWrapper = {
+  "description" : "List of user object",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/LightningInvoiceRequest"
+      }
+    }
+  },
+  "required" : true
+};
+
+  var schema = findNode('schema',schemaWrapper).schema;
+  if (!schema) {
+    schema = schemaWrapper.schema;
+  }
+  if (schema.$ref != null) {
+    schema = defsParser.$refs.get(schema.$ref);
+  } else {
+    schemaWrapper.definitions = Object.assign({}, defs);
+    $RefParser.dereference(schemaWrapper).catch(function(err) {
+      console.log(err);
+    });
+  }
+
+  var view = new JSONSchemaView(schema,2,{isBodyParam: true});
+  var result = $('#d2e199_requestLightningInvoice_lightningInvoiceRequest');
+  result.empty();
+  result.append(view.render());
+});
+</script>
+<div id="d2e199_requestLightningInvoice_lightningInvoiceRequest"></div>
+</td>
+</tr>
+
+                            </table>
 
 
 
                           <h2>Responses</h2>
-                            <h3 id="examples-Lightning-getLightningInfo-title-200"></h3>
-                            <p id="examples-Lightning-getLightningInfo-description-200" class="marked"></p>
+                            <h3 id="examples-Lightning-requestLightningInvoice-title-200"></h3>
+                            <p id="examples-Lightning-requestLightningInvoice-description-200" class="marked"></p>
                             <script>
                               var responseLightning200_description = `successful operation`;
                               var responseLightning200_description_break = responseLightning200_description.indexOf('\n');
                               if (responseLightning200_description_break == -1) {
-                                $("#examples-Lightning-getLightningInfo-title-200").text("Status: 200 - " + responseLightning200_description);
+                                $("#examples-Lightning-requestLightningInvoice-title-200").text("Status: 200 - " + responseLightning200_description);
                               } else {
-                                $("#examples-Lightning-getLightningInfo-title-200").text("Status: 200 - " + responseLightning200_description.substring(0, responseLightning200_description_break));
-                                $("#examples-Lightning-getLightningInfo-description-200").html(responseLightning200_description.substring(responseLightning200_description_break));
+                                $("#examples-Lightning-requestLightningInvoice-title-200").text("Status: 200 - " + responseLightning200_description.substring(0, responseLightning200_description_break));
+                                $("#examples-Lightning-requestLightningInvoice-description-200").html(responseLightning200_description.substring(responseLightning200_description_break));
                               }
                             </script>
 
 
-                            <ul id="responses-detail-Lightning-getLightningInfo-200" class="nav nav-tabs nav-tabs-examples" >
+                            <ul id="responses-detail-Lightning-requestLightningInvoice-200" class="nav nav-tabs nav-tabs-examples" >
                                 <li class="active">
-                                  <a data-toggle="tab" href="#responses-Lightning-getLightningInfo-200-schema">Schema</a>
+                                  <a data-toggle="tab" href="#responses-Lightning-requestLightningInvoice-200-schema">Schema</a>
                                 </li>
 
 
@@ -1165,9 +1243,9 @@ pub fn main() {
                             </ul>
 
 
-                            <div class="tab-content" id="responses-Lightning-getLightningInfo-200-wrapper" style='margin-bottom: 10px;'>
-                                <div class="tab-pane active" id="responses-Lightning-getLightningInfo-200-schema">
-                                  <div id="responses-Lightning-getLightningInfo-schema-200" class="exampleStyle">
+                            <div class="tab-content" id="responses-Lightning-requestLightningInvoice-200-wrapper" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-Lightning-requestLightningInvoice-200-schema">
+                                  <div id="responses-Lightning-requestLightningInvoice-schema-200" class="exampleStyle">
                                     <script>
                                       $(document).ready(function() {
                                         var schemaWrapper = {
@@ -1175,7 +1253,7 @@ pub fn main() {
   "content" : {
     "application/json" : {
       "schema" : {
-        "$ref" : "#/components/schemas/LightningPayload"
+        "$ref" : "#/components/schemas/RequestLightningInvoicePayload"
       }
     }
   }
@@ -1196,14 +1274,14 @@ pub fn main() {
                                         }
 
                                         var view = new JSONSchemaView(schema, 3);
-                                        $('#responses-Lightning-getLightningInfo-200-schema-data').val(JSON.stringify(schema));
-                                        var result = $('#responses-Lightning-getLightningInfo-schema-200');
+                                        $('#responses-Lightning-requestLightningInvoice-200-schema-data').val(JSON.stringify(schema));
+                                        var result = $('#responses-Lightning-requestLightningInvoice-schema-200');
                                         result.empty();
                                         result.append(view.render());
                                       });
                                     </script>
                                   </div>
-                                  <input id='responses-Lightning-getLightningInfo-200-schema-data' type='hidden' value=''></input>
+                                  <input id='responses-Lightning-requestLightningInvoice-200-schema-data' type='hidden' value=''></input>
                                 </div>
                             </div>
                         </article>
@@ -1213,12 +1291,6 @@ pub fn main() {
           </div>
           <div id="footer">
             <div id="api-_footer">
-              <p>Suggestions, contact, support and error reporting;
-                  <div class="app-desc">Information URL: <a href="https://openapi-generator.tech">https://openapi-generator.tech</a></div>
-                  <div class="app-desc">Contact Info: <a href="team@openapitools.org">team@openapitools.org</a></div>
-              </p>
-                <div class="license-info">All rights reserved</div>
-                <div class="license-url">http://apache.org/licenses/LICENSE-2.0.html</div>
             </div>
           </div>
       </div>
