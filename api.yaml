@@ -1,28 +1,130 @@
 openapi: 3.0.1
 servers:
-  - url: 'http://relampago.cash/api/v1'
+  - url: 'http://api.relampago.cash/'
 info:
-  description: These are specifications for using the Relampago API.
+  description: These are specifications for using the Relampago API. Relampago allows for Bitcoin Lightning users to offramp their Lightning Bitcoin onto any SPEI-compatible account within the Mexican fiat financial network. Relampago offers instant settlement into MXN during work hours, and same-day settlement on weekends. Relampago maintains the service level agreement that once an invoice has been successfully generated for a valid user, and Lightning Bitcoin has been paid to the invoice, that peso amount will be successfully delivered to the user. 
   version: 1.0.0
   title: Relampago API Specifications
 tags:
-  - name: lightning
+  - name: Info
+  - name: Orders
+  - name: Verification
+
 paths:
-  /order:
+  /getRates:
     post:
       tags:
-      - lightning
-      description: Requests a lightning invoice is generated for some receiver.
-      operationId: requestLightningInvoice
+        - Fees
+      summary: Get Fee Info
+      description: Returns info about our BTC/local currency rates and transaction fees
+      requestBody:
+
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetRatesRequest'
+            example:
+              orgId: PlatapusCorp
+              amount_btc: .001
+              currency: mxn
+              
       responses:
-        "200":
-          description: successful operation
+        '200':
+          description: Successful Response
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/RequestLightningInvoicePayload"
+                $ref: '#/components/schemas/GetRatesResponse'  
+  /verifyRecipientBankAccount:
+    post:
+      tags:
+        - Verification
+      summary: Verify Recipient
+      description: verify that a recipient's bank account info is valid
+
       requestBody:
-        $ref: '#/components/requestBodies/LightningInvoiceRequest'
+        
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VerifyBankAccountRequest'
+              
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VerifyBankAccountResponse'
+  /order:
+    get:
+      tags:
+        - Orders
+      summary: Get Order Status
+      description: Returns the status of the payment after we've received a paid LN invoice
+
+      parameters:
+        - in: query
+          name: txId
+          example: "0x123..."
+          schema:
+            type: string
+          required: true
+          description: id of the transaction in our system
+              
+      responses:
+        '200':
+          description: Sucessful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaymentStatusResponse'    
+    post:
+      tags:
+        - Orders
+      summary: Request Lightning Invoice
+      description: Requests a lightning invoice to be generated for some end-user within the Mexican SPEI financial network. The user must have a valid CLABE number, and their name provided in the request must match that associated with their CLABE number.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LnInvoiceRequest'
+              
+      responses:
+        '200':
+          description: nothing
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LnInvoiceResponse' 
+  /banks:
+    get:
+      tags:
+        - Fees
+      summary: Get Banks
+      description: Returns a comprehensive list of banks that we can withdraw to
+      parameters:
+        - in: query
+          name: countryCode
+          style: form
+          explode: false
+          schema:
+            type: string
+            example: USA
+          required: true
+          description: country code as per the ISO 3166-1 alpha-2 standard
+          example: MX
+              
+      responses:
+        '200':
+          description: Sucessful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WithdrawalProvidersResponse'
 components:
   requestBodies:
     LightningInvoiceRequest:
@@ -63,3 +165,132 @@ components:
           format: float64
           description: Clabe identifier of the end-user.
           example: 123123423535
+    GetRatesRequest:
+      type: object
+      properties:
+        orgId:
+          type: string
+        amount_btc:
+          type: number
+          format: double
+        currency:
+          type: string
+      required:
+        - id
+        - amount_btc
+        - orgId
+    GetRatesResponse:
+      type: object
+      properties:
+        rate:
+          type: number
+          format: double
+          example: 444239.39
+        fee:
+          type: number
+          format: double
+          example: 1.07
+        recipientReceives:
+          type: number
+          format: double
+          example: 400.58
+        success:
+          type: boolean
+          example: true
+          
+    LnInvoiceRequest:
+      type: object
+      properties:
+        amount_btc:
+          type: number
+          format: double
+          example: .001
+        benificary:
+          type: string
+          example: Jose Medina
+        clabe:
+          type: string
+          example: 139456293583293684
+        institution_name:
+          type: string
+          example: BBVA
+        withdrawal_method:
+          type: string
+          example: debit card
+          
+    LnInvoiceResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        txId:
+          type: string
+          example: "d3993-a59"
+        ln_invoice:
+          type: string
+          
+    PaymentStatusResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        txId:
+          type: string
+          example: "d3993-a59"
+        status:
+          type: string
+          example: 'pending'
+          
+    VerifyBankAccountRequest:
+      type: object
+      properties:
+        benificary:
+          type: string
+          example: Jose Medina
+        clabe:
+          type: string
+          example: 139456293583293684
+        institution_name:
+          type: string
+          example: BBVA
+        withdrawal_method:
+          type: string
+          example: debit card
+        phone_number:
+          type: string
+          example: +52 349 393 1904
+        debit_card:
+          type: string
+          example: 6920 3939 3929 4739
+          
+    VerifyBankAccountResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        message:
+          type: string
+          example: "successfully verified bank account info"
+          
+    WithdrawalProvidersResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        payload:
+          type: array
+          items:
+            properties: 
+              name:
+                type: string
+                example: Santander
+              code:
+                type: string
+                example: 40014
+              countryCode:
+                type: string
+                example: MX

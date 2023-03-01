@@ -1,21 +1,22 @@
-<tr><td style="width:150px;">{{baseName}}{{#required}}*{{/required}}</td>
+<tr><td style="width:150px;">{{baseName}}</td>
+<td style="width:150px;">
+    <span class="type">
+        {{dataType}}
+    </span>
+</td>
 <td>
 
 
     <div id="d2e199_{{nickname}}_{{paramName}}">
         <div class="json-schema-view">
             <div class="primitive">
-                <span class="type">
-                    {{dataType}}
-                </span>
                 {{#dataFormat}}
                     <span class="format">
                         ({{.}})
                     </span>
                 {{/dataFormat}}
-
                 {{#description}}
-                    <div class="inner description marked">
+                    <div class="marked">
 {{.}}
                     </div>
                 {{/description}}
@@ -29,11 +30,6 @@
                     </div>
                 {{/vendorExtensions.x-eum-formatted}}
             {{/isEnum}}
-            {{#required}}
-                <div class="inner required">
-                    Required
-                </div>
-            {{/required}}
         </div>
     </div>
 </td>

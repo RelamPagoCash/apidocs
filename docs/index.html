@@ -203,7 +203,7 @@ h={};g()}};typeof define==="function"&&define.amd&&define("google-code-prettify"
     /* Pretty printing styles. Used with prettify.js. */
 /* Vim sunburst theme by David Leibovic */
 pre .str {
-  color: #65B042;
+  color: #008000;
 }
 /* string  - green */
 pre .kwd {
@@ -224,11 +224,11 @@ pre .lit {
 }
 /* literal - blue */
 pre .pun {
-  color: #fff;
+  color: #000;
 }
 /* punctuation - white */
 pre .pln {
-  color: #fff;
+  color: #000;
 }
 /* plaintext - white */
 pre .tag {
@@ -308,14 +308,16 @@ li.L8 {
 
 
 * {
-  font-family: 'Source Code Pro', sans-serif;
+  font-family: 'Inter', sans-serif !important;
 }
 body {
   min-width: 980px;
 }
 
 .app-desc {
-  color: #808080
+  color: #555;
+  margin-bottom: 10px;
+  font-family: 'Inter';
 }
 
 body, p, a, div, th, td, li {
@@ -361,7 +363,6 @@ h2 {
 }
 
 section {
-  border-top: 1px solid #ebebeb;
   padding: 30px 0;
 }
 
@@ -413,7 +414,7 @@ article h4 {
 table {
   border-collapse: collapse;
   width: 100%;
-  margin: 0 0 20px 0;
+  margin: 0 0 0px 0;
 }
 
 th {
@@ -493,40 +494,63 @@ pre.language-json {
   overflow: auto;
 }
 
-pre.language-html {
+pre.prettyprint, code.language-bsh {
+    background-color: #f5f5f5;
+}
+
+code.language-bsh span {
+    font-family: "Source Code Pro", sans-serif !important;
+}
+
+language-html {
   margin: 40px 0 20px 0;
 }
 
-pre.language-html:before {
+.language-html {
   content: attr(data-type);
-  position: absolute;
-  top: -30px;
-  left: 0;
   font-family: "Source Sans Pro", sans-serif;
   font-weight: 600;
   font-size: 15px;
   display: inline-block;
-  padding: 2px 5px;
   border-radius: 6px;
   text-transform: uppercase;
-  background-color: #3387CC;
+  background-color: transparent;
   color: #ffffff;
+  margin-right: 10px;
 }
 
-pre.language-html[data-type="get"]:before {
-  background-color: green;
+.tab-content {
+  border-radius: 6px;
+  border: 1px solid rgba(0,0,0,0.15);
+  background-color: #f5f5f5; 
 }
 
-pre.language-html[data-type="put"]:before {
-  background-color: #e5c500;
+.inlineBlock {
+  display: inline-block;
 }
 
-pre.language-html[data-type="post"]:before {
-  background-color: #4070ec;
+.dullDark {
+    color: #555;
 }
 
-pre.language-html[data-type="delete"]:before {
-  background-color: #ed0039;
+.language-html[data-type="get"] {
+  color: green;
+}
+
+.language-html[data-type="put"] {
+  color: #e5c500;
+}
+
+.language-html[data-type="post"] {
+  color: #4070ec;
+}
+
+.language-html[data-type="delete"] {
+  color: #ed0039;
+}
+
+.inlineBlock {
+      font-family: "Source Code Pro", sans-serif !important;
 }
 
 pre.language-api .str {
@@ -571,7 +595,6 @@ pre code.sample-request-response-json {
 
 .sidenav > li > a {
   display: block;
-  width: 192px;
   margin: 0;
   padding: 2px 11px;
   border: 0;
@@ -579,23 +602,74 @@ pre code.sample-request-response-json {
   border-right: transparent 4px solid;
   font-family: "Source Sans Pro", sans-serif;
   font-weight: 400;
-  font-size: 14px;
+  font-size: 13px;
+}
+
+section .apiHeader {
+  margin-bottom: 0px;
+}
+
+section .marked {
+    margin-bottom: 0px;
+}
+
+section .marked p {
+    color: #555;
+    margin-bottom: 0px;
+}
+
+.sidenav > .icon {
+  margin-bottom: 10px;
 }
 
 .sidenav > li.nav-header > a {
-  padding: 5px 15px;
-  border: 1px solid #e5e5e5;
   width: 190px;
   font-family: "Source Sans Pro", sans-serif;
   font-weight: 700;
   font-size: 16px;
-  background-color: #4c8eca !important;
-  color: #fff;
+  background-color: transparent !important;
+  color: #000;
+  border-bottom: 1px solid #aaa;
 }
 
 .sidenav > li.nav-header.active > a {
-  background-color: #4c8eca !important;
-  color: #fff;
+  background-color: transparent !important;
+  color: #000;
+}
+
+.sidenav > li.nav-category > a {
+  width: 190px;
+  font-family: "Source Code Pro", sans-serif !important;
+  font-weight: 700;
+  font-size: 15px;
+  background-color: transparent !important;
+  color: #000;
+  padding-top: 10px;
+}
+
+.sidenav > li.nav-category > a:hover {
+  color: #000;
+}
+
+.sidenav > .sideItem > a {
+  font-family: 'Source Code Pro', sans-serif !important;
+  background-color: transparent !important;
+  color: #000;
+  padding-top: 5px;
+  padding-bottom: 0px;
+  padding-right: 0px;
+  margin-right: 0px;
+  margin-left: 10px;
+}
+
+.sidenav > .sideItem.active > a {
+  background-color: transparent !important;
+  color: #000;
+}
+
+.sidenav > .sideItem > a:hover {
+  background-color: transparent !important;
+  color: #aaa;
 }
 
 
@@ -660,7 +734,7 @@ ul.nav-tabs {
     background-color: #ffffff;
     color: #000000;
     padding: 10px;
-    border: #808080 1px solid;
+    border: #eee 1px solid;
     border-radius: 6px;
     position: relative;
     margin: 10px 0 20px 0;
@@ -724,6 +798,7 @@ ul.nav-tabs {
 }
 .pattern, .example {
   color: blue;
+  display: none;
 }
 .default {
   color: black;
@@ -758,7 +833,14 @@ ul.nav-tabs {
   color: #33f
 }
 .json-schema-view .required, json-schema-view .required {
-  color: red
+  color: red;
+  display: none;
+}
+td .json-schema-view * {
+    font-family: 'Inter', sans-serif !important;
+}
+.json-schema-view * {
+    font-family: 'Source Code Pro', sans-serif !important;
 }
 .json-schema-view .inner, json-schema-view .inner {
   padding-left: 18px
@@ -838,7 +920,7 @@ ul.nav-tabs {
   transform: rotate(-90deg)
 }
 .exampleStyle {
-  padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;
+  padding: 30px;
 }
   </style>
 </head>
@@ -846,6 +928,46 @@ ul.nav-tabs {
   <script>
     // Script section to load models into a JS Var
     var defs = {}
+    defs["GetRatesRequest"] = {
+  "required" : [ "amount_btc", "id", "orgId" ],
+  "type" : "object",
+  "properties" : {
+    "orgId" : {
+      "type" : "string"
+    },
+    "amount_btc" : {
+      "type" : "number",
+      "format" : "double"
+    },
+    "currency" : {
+      "type" : "string"
+    }
+  }
+};
+    defs["GetRatesResponse"] = {
+  "type" : "object",
+  "properties" : {
+    "rate" : {
+      "type" : "number",
+      "format" : "double",
+      "example" : 444239.39
+    },
+    "fee" : {
+      "type" : "number",
+      "format" : "double",
+      "example" : 1.07
+    },
+    "recipientReceives" : {
+      "type" : "number",
+      "format" : "double",
+      "example" : 400.58
+    },
+    "success" : {
+      "type" : "boolean",
+      "example" : true
+    }
+  }
+};
     defs["LightningInvoiceRequest"] = {
   "title" : "Lightning Invoice Request",
   "required" : [ "amount", "clabe", "name" ],
@@ -871,6 +993,65 @@ ul.nav-tabs {
   },
   "description" : "A lightning invoice request"
 };
+    defs["LnInvoiceRequest"] = {
+  "type" : "object",
+  "properties" : {
+    "amount_btc" : {
+      "type" : "number",
+      "format" : "double",
+      "example" : 0.001
+    },
+    "benificary" : {
+      "type" : "string",
+      "example" : "Jose Medina"
+    },
+    "clabe" : {
+      "type" : "string",
+      "example" : "139456293583293684"
+    },
+    "institution_name" : {
+      "type" : "string",
+      "example" : "BBVA"
+    },
+    "withdrawal_method" : {
+      "type" : "string",
+      "example" : "debit card"
+    }
+  }
+};
+    defs["LnInvoiceResponse"] = {
+  "type" : "object",
+  "properties" : {
+    "success" : {
+      "type" : "boolean",
+      "example" : true
+    },
+    "txId" : {
+      "type" : "string",
+      "example" : "d3993-a59"
+    },
+    "ln_invoice" : {
+      "type" : "string"
+    }
+  }
+};
+    defs["PaymentStatusResponse"] = {
+  "type" : "object",
+  "properties" : {
+    "success" : {
+      "type" : "boolean",
+      "example" : true
+    },
+    "txId" : {
+      "type" : "string",
+      "example" : "d3993-a59"
+    },
+    "status" : {
+      "type" : "string",
+      "example" : "pending"
+    }
+  }
+};
     defs["RequestLightningInvoicePayload"] = {
   "title" : "Lightning Invoice Request",
   "type" : "object",
@@ -878,6 +1059,76 @@ ul.nav-tabs {
     "success" : {
       "type" : "boolean",
       "example" : true
+    }
+  }
+};
+    defs["VerifyBankAccountRequest"] = {
+  "type" : "object",
+  "properties" : {
+    "benificary" : {
+      "type" : "string",
+      "example" : "Jose Medina"
+    },
+    "clabe" : {
+      "type" : "string",
+      "example" : "139456293583293684"
+    },
+    "institution_name" : {
+      "type" : "string",
+      "example" : "BBVA"
+    },
+    "withdrawal_method" : {
+      "type" : "string",
+      "example" : "debit card"
+    },
+    "phone_number" : {
+      "type" : "string",
+      "example" : "+52 349 393 1904"
+    },
+    "debit_card" : {
+      "type" : "string",
+      "example" : "6920 3939 3929 4739"
+    }
+  }
+};
+    defs["VerifyBankAccountResponse"] = {
+  "type" : "object",
+  "properties" : {
+    "success" : {
+      "type" : "boolean",
+      "example" : true
+    },
+    "message" : {
+      "type" : "string",
+      "example" : "successfully verified bank account info"
+    }
+  }
+};
+    defs["WithdrawalProvidersResponse"] = {
+  "type" : "object",
+  "properties" : {
+    "success" : {
+      "type" : "boolean",
+      "example" : true
+    },
+    "payload" : {
+      "type" : "array",
+      "items" : {
+        "properties" : {
+          "name" : {
+            "type" : "string",
+            "example" : "Santander"
+          },
+          "code" : {
+            "type" : "string",
+            "example" : "40014"
+          },
+          "countryCode" : {
+            "type" : "string",
+            "example" : "MX"
+          }
+        }
+      }
     }
   }
 };
@@ -897,11 +1148,26 @@ ul.nav-tabs {
 
               </div>
             -->
-            <li class="nav-fixed nav-header active" data-group="_"><a href="#api-_">API Summary</a></li>
+            <img src="./relampago.png" class="icon"/>
+            <li class="nav-fixed nav-header active" data-group="_"><a href="#top">API Summary</a></li>
 
-                  <li class="nav-header" data-group="Lightning"><a href="#api-Lightning">API Methods - Lightning</a></li>
-                    <li data-group="Lightning" data-name="requestLightningInvoice" class="">
-                      <a href="#api-Lightning-requestLightningInvoice">requestLightningInvoice</a>
+                  <li class="nav-category" data-group="Fees"><a href="#api-Fees">Fees</a></li>
+                    <li data-group="Fees" data-name="banksGet" class="sideItem">
+                      <a href="#api-Fees-banksGet">Get Banks</a>
+                    </li>
+                    <li data-group="Fees" data-name="getRatesPost" class="sideItem">
+                      <a href="#api-Fees-getRatesPost">Get Fee Info</a>
+                    </li>
+                  <li class="nav-category" data-group="Orders"><a href="#api-Orders">Orders</a></li>
+                    <li data-group="Orders" data-name="orderGet" class="sideItem">
+                      <a href="#api-Orders-orderGet">Get Order Status</a>
+                    </li>
+                    <li data-group="Orders" data-name="orderPost" class="sideItem">
+                      <a href="#api-Orders-orderPost">Request Lightning Invoice</a>
+                    </li>
+                  <li class="nav-category" data-group="Verification"><a href="#api-Verification">Verification</a></li>
+                    <li data-group="Verification" data-name="verifyRecipientBankAccountPost" class="sideItem">
+                      <a href="#api-Verification-verifyRecipientBankAccountPost">Verify Recipient</a>
                     </li>
           </ul>
         </nav>
@@ -915,345 +1181,98 @@ ul.nav-tabs {
         </div>
         <div id="header">
           <div id="api-_">
-            <h2 id="welcome-to-apidoc">API and SDK Documentation</h2>
               <div class="app-desc">Version: 1.0.0</div>
-            <hr>
-            <div id="app-description" class="app-desc">
-                These are specifications for using the Relampago API.
-            </div>
+            <section>
+                <h1>Overview</h1>
+                <div id="app-description" class="app-desc">
+                    These are specifications for using the Relampago API. Relampago allows for Bitcoin Lightning users to offramp their Lightning Bitcoin onto any SPEI-compatible account within the Mexican fiat financial network. Relampago offers instant settlement into MXN during work hours, and same-day settlement on weekends. Relampago maintains the service level agreement that once an invoice has been successfully generated for a valid user, and Lightning Bitcoin has been paid to the invoice, that peso amount will be successfully delivered to the user.
+                </div
+            </section>
           </div>
         </div>
+        <hr/>
         <div id="sections">
-                <section id="api-Lightning">
-                  <h1>Lightning</h1>
-                    <div id="api-Lightning-requestLightningInvoice">
-                      <article id="api-Lightning-requestLightningInvoice-0" data-group="User" data-name="requestLightningInvoice" data-version="0">
+                <section id="api-Fees">
+                  <h1>Fees</h1>
+                    <div id="api-Fees-banksGet">
+                      <article id="api-Fees-banksGet-0" data-group="User" data-name="banksGet" data-version="0">
                         <div class="pull-left">
-                          <h1>requestLightningInvoice</h1>
-                          <p></p>
+                          <h1 class='apiHeader'>Get Banks</h1>
                         </div>
                         <div class="pull-right"></div>
                         <div class="clearfix"></div>
                         <p></p>
-                        <p class="marked">Requests a lightning invoice is generated for some receiver.</p>
-                        <p></p>
-                        <br />
-                        <pre class="prettyprint language-html prettyprinted" data-type="post"><code><span class="pln">/order</span></code></pre>
-                        <p>
-                          <h3>Usage and SDK Samples</h3>
-                        </p>
-                        <ul class="nav nav-tabs nav-tabs-examples">
-                          <li class="active"><a href="#examples-Lightning-requestLightningInvoice-0-curl">Curl</a></li>
-                          <!--li class=""><a href="#examples-Lightning-requestLightningInvoice-0-java">Java</a></li-->
-                          <!--li class=""><a href="#examples-Lightning-requestLightningInvoice-0-android">Android</a></li-->
-                          <!--<li class=""><a href="#examples-Lightning-requestLightningInvoice-0-groovy">Groovy</a></li>-->
-                          <!--li class=""><a href="#examples-Lightning-requestLightningInvoice-0-objc">Obj-C</a></li-->
-                          <!--li class=""><a href="#examples-Lightning-requestLightningInvoice-0-javascript">JavaScript</a></li-->
-                          <!--<li class=""><a href="#examples-Lightning-requestLightningInvoice-0-angular">Angular</a></li>-->
-                          <!--li class=""><a href="#examples-Lightning-requestLightningInvoice-0-csharp">C#</a></li-->
-                          <!--li class=""><a href="#examples-Lightning-requestLightningInvoice-0-php">PHP</a></li-->
-                          <!--li class=""><a href="#examples-Lightning-requestLightningInvoice-0-perl">Perl</a></li-->
-                          <!--li class=""><a href="#examples-Lightning-requestLightningInvoice-0-python">Python</a></li-->
-                          <!--li class=""><a href="#examples-Lightning-requestLightningInvoice-0-rust">Rust</a></li-->
-                        </ul>
-
-                        <div class="tab-content">
-                          <div class="tab-pane active" id="examples-Lightning-requestLightningInvoice-0-curl">
-                            <pre class="prettyprint"><code class="language-bsh">curl -X POST \
- -H "Accept: application/json" \
- -H "Content-Type: application/json" \
- "http://relampago.cash/api/v1/order" \
- -d '{
-  &quot;amount&quot; : 100,
-  &quot;name&quot; : &quot;Jonathan Smith&quot;,
-  &quot;clabe&quot; : 123123423535
-}'
-</code></pre>
-                          </div>
-                          <div class="tab-pane" id="examples-Lightning-requestLightningInvoice-0-java">
-                            <pre class="prettyprint"><code class="language-java">import org.openapitools.client.*;
-import org.openapitools.client.auth.*;
-import org.openapitools.client.model.*;
-import org.openapitools.client.api.LightningApi;
-
-import java.io.File;
-import java.util.*;
-
-public class LightningApiExample {
-    public static void main(String[] args) {
-
-        // Create an instance of the API class
-        LightningApi apiInstance = new LightningApi();
-        LightningInvoiceRequest lightningInvoiceRequest = ; // LightningInvoiceRequest | 
-
-        try {
-            RequestLightningInvoicePayload result = apiInstance.requestLightningInvoice(lightningInvoiceRequest);
-            System.out.println(result);
-        } catch (ApiException e) {
-            System.err.println("Exception when calling LightningApi#requestLightningInvoice");
-            e.printStackTrace();
-        }
-    }
-}
-</code></pre>
-                          </div>
-
-                          <div class="tab-pane" id="examples-Lightning-requestLightningInvoice-0-android">
-                            <pre class="prettyprint"><code class="language-java">import org.openapitools.client.api.LightningApi;
-
-public class LightningApiExample {
-    public static void main(String[] args) {
-        LightningApi apiInstance = new LightningApi();
-        LightningInvoiceRequest lightningInvoiceRequest = ; // LightningInvoiceRequest | 
-
-        try {
-            RequestLightningInvoicePayload result = apiInstance.requestLightningInvoice(lightningInvoiceRequest);
-            System.out.println(result);
-        } catch (ApiException e) {
-            System.err.println("Exception when calling LightningApi#requestLightningInvoice");
-            e.printStackTrace();
-        }
-    }
-}</code></pre>
-                          </div>
-  <!--
-  <div class="tab-pane" id="examples-Lightning-requestLightningInvoice-0-groovy">
-  <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
-  </div> -->
-                            <div class="tab-pane" id="examples-Lightning-requestLightningInvoice-0-objc">
-                              <pre class="prettyprint"><code class="language-cpp">
-
-// Create an instance of the API class
-LightningApi *apiInstance = [[LightningApi alloc] init];
-LightningInvoiceRequest *lightningInvoiceRequest = ; // 
-
-[apiInstance requestLightningInvoiceWith:lightningInvoiceRequest
-              completionHandler: ^(RequestLightningInvoicePayload output, NSError* error) {
-    if (output) {
-        NSLog(@"%@", output);
-    }
-    if (error) {
-        NSLog(@"Error: %@", error);
-    }
-}];
-</code></pre>
-                            </div>
-
-                            <div class="tab-pane" id="examples-Lightning-requestLightningInvoice-0-javascript">
-                              <pre class="prettyprint"><code class="language-js">var RelampagoApiSpecifications = require('relampago_api_specifications');
-
-// Create an instance of the API class
-var api = new RelampagoApiSpecifications.LightningApi()
-var lightningInvoiceRequest = ; // {LightningInvoiceRequest} 
-
-var callback = function(error, data, response) {
-  if (error) {
-    console.error(error);
-  } else {
-    console.log('API called successfully. Returned data: ' + data);
-  }
-};
-api.requestLightningInvoice(lightningInvoiceRequest, callback);
-</code></pre>
-                            </div>
-
-                            <!--<div class="tab-pane" id="examples-Lightning-requestLightningInvoice-0-angular">
-              <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
-            </div>-->
-                            <div class="tab-pane" id="examples-Lightning-requestLightningInvoice-0-csharp">
-                              <pre class="prettyprint"><code class="language-cs">using System;
-using System.Diagnostics;
-using Org.OpenAPITools.Api;
-using Org.OpenAPITools.Client;
-using Org.OpenAPITools.Model;
-
-namespace Example
-{
-    public class requestLightningInvoiceExample
-    {
-        public void main()
-        {
-
-            // Create an instance of the API class
-            var apiInstance = new LightningApi();
-            var lightningInvoiceRequest = new LightningInvoiceRequest(); // LightningInvoiceRequest | 
-
-            try {
-                RequestLightningInvoicePayload result = apiInstance.requestLightningInvoice(lightningInvoiceRequest);
-                Debug.WriteLine(result);
-            } catch (Exception e) {
-                Debug.Print("Exception when calling LightningApi.requestLightningInvoice: " + e.Message );
-            }
-        }
-    }
-}
-</code></pre>
-                            </div>
-
-                            <div class="tab-pane" id="examples-Lightning-requestLightningInvoice-0-php">
-                              <pre class="prettyprint"><code class="language-php"><&#63;php
-require_once(__DIR__ . '/vendor/autoload.php');
-
-// Create an instance of the API class
-$api_instance = new OpenAPITools\Client\Api\LightningApi();
-$lightningInvoiceRequest = ; // LightningInvoiceRequest | 
-
-try {
-    $result = $api_instance->requestLightningInvoice($lightningInvoiceRequest);
-    print_r($result);
-} catch (Exception $e) {
-    echo 'Exception when calling LightningApi->requestLightningInvoice: ', $e->getMessage(), PHP_EOL;
-}
-?></code></pre>
-                            </div>
-
-                            <div class="tab-pane" id="examples-Lightning-requestLightningInvoice-0-perl">
-                              <pre class="prettyprint"><code class="language-perl">use Data::Dumper;
-use WWW::OPenAPIClient::Configuration;
-use WWW::OPenAPIClient::LightningApi;
-
-# Create an instance of the API class
-my $api_instance = WWW::OPenAPIClient::LightningApi->new();
-my $lightningInvoiceRequest = WWW::OPenAPIClient::Object::LightningInvoiceRequest->new(); # LightningInvoiceRequest | 
-
-eval {
-    my $result = $api_instance->requestLightningInvoice(lightningInvoiceRequest => $lightningInvoiceRequest);
-    print Dumper($result);
-};
-if ($@) {
-    warn "Exception when calling LightningApi->requestLightningInvoice: $@\n";
-}</code></pre>
-                            </div>
-
-                            <div class="tab-pane" id="examples-Lightning-requestLightningInvoice-0-python">
-                              <pre class="prettyprint"><code class="language-python">from __future__ import print_statement
-import time
-import openapi_client
-from openapi_client.rest import ApiException
-from pprint import pprint
-
-# Create an instance of the API class
-api_instance = openapi_client.LightningApi()
-lightningInvoiceRequest =  # LightningInvoiceRequest | 
-
-try:
-    api_response = api_instance.request_lightning_invoice(lightningInvoiceRequest)
-    pprint(api_response)
-except ApiException as e:
-    print("Exception when calling LightningApi->requestLightningInvoice: %s\n" % e)</code></pre>
-                            </div>
-
-                            <div class="tab-pane" id="examples-Lightning-requestLightningInvoice-0-rust">
-                              <pre class="prettyprint"><code class="language-rust">extern crate LightningApi;
-
-pub fn main() {
-    let lightningInvoiceRequest = ; // LightningInvoiceRequest
-
-    let mut context = LightningApi::Context::default();
-    let result = client.requestLightningInvoice(lightningInvoiceRequest, &context).wait();
-
-    println!("{:?}", result);
-}
-</code></pre>
-                            </div>
-                          </div>
-
-                          <h2>Scopes</h2>
-                          <table>
-                            
-                          </table>
-
-                          <h2>Parameters</h2>
+                        <p class="marked">Returns a comprehensive list of banks that we can withdraw to</p>
+                        <br/>
+                        <h3>Request Format</h3>
+                        <span><p class="language-html" data-type="get">get</p><p class="inlineBlock dullDark">/banks</p></span>
 
 
 
-                            <div class="methodsubtabletitle">Body parameters</div>
+
+                            <h3 style="margin-top:10px;">Query Parameters</h3>
                             <table id="methodsubtable">
                               <tr>
                                 <th width="150px">Name</th>
+                                <th width="150px">Type</th>
                                 <th>Description</th>
                               </tr>
-                                <tr><td style="width:150px;">lightningInvoiceRequest <span style="color:red;">*</span></td>
+                                <tr><td style="width:150px;">countryCode</td>
+<td style="width:150px;">
+    <span class="type">
+        String
+    </span>
+</td>
 <td>
-<p class="marked">List of user object</p>
-<script>
-$(document).ready(function() {
-  var schemaWrapper = {
-  "description" : "List of user object",
-  "content" : {
-    "application/json" : {
-      "schema" : {
-        "$ref" : "#/components/schemas/LightningInvoiceRequest"
-      }
-    }
-  },
-  "required" : true
-};
 
-  var schema = findNode('schema',schemaWrapper).schema;
-  if (!schema) {
-    schema = schemaWrapper.schema;
-  }
-  if (schema.$ref != null) {
-    schema = defsParser.$refs.get(schema.$ref);
-  } else {
-    schemaWrapper.definitions = Object.assign({}, defs);
-    $RefParser.dereference(schemaWrapper).catch(function(err) {
-      console.log(err);
-    });
-  }
 
-  var view = new JSONSchemaView(schema,2,{isBodyParam: true});
-  var result = $('#d2e199_requestLightningInvoice_lightningInvoiceRequest');
-  result.empty();
-  result.append(view.render());
-});
-</script>
-<div id="d2e199_requestLightningInvoice_lightningInvoiceRequest"></div>
+    <div id="d2e199_banksGet_countryCode">
+        <div class="json-schema-view">
+            <div class="primitive">
+                    <div class="marked">
+country code as per the ISO 3166-1 alpha-2 standard
+                    </div>
+            </div>
+        </div>
+    </div>
 </td>
 </tr>
 
                             </table>
+                        <br/>
+                        <h3 style="margin-bottom: 0px;">Usage</h3>
+                        <div class="tab-content" style="border: none; background-color: transparent;" >
+                          <div class="tab-pane active" id="examples-Fees-banksGet-0-curl">
+                            <pre class="prettyprint"><code class="language-bsh">curl -X GET \
+ -H "Accept: application/json" \
+ "http://api.relampago.cash/banks?countryCode=MX"
+</code></pre>
+                          </div>
+                        </div>
 
-
-
-                          <h2>Responses</h2>
-                            <h3 id="examples-Lightning-requestLightningInvoice-title-200"></h3>
-                            <p id="examples-Lightning-requestLightningInvoice-description-200" class="marked"></p>
+                            <h3>Response</h3>
+                            <p id="examples-Fees-banksGet-description-200" class="marked"></p>
                             <script>
-                              var responseLightning200_description = `successful operation`;
-                              var responseLightning200_description_break = responseLightning200_description.indexOf('\n');
-                              if (responseLightning200_description_break == -1) {
-                                $("#examples-Lightning-requestLightningInvoice-title-200").text("Status: 200 - " + responseLightning200_description);
+                              var responseFees200_description = `Sucessful Response`;
+                              var responseFees200_description_break = responseFees200_description.indexOf('\n');
+                              if (responseFees200_description_break == -1) {
+                                $("#examples-Fees-banksGet-title-200").text("Status: 200 - " + responseFees200_description);
                               } else {
-                                $("#examples-Lightning-requestLightningInvoice-title-200").text("Status: 200 - " + responseLightning200_description.substring(0, responseLightning200_description_break));
-                                $("#examples-Lightning-requestLightningInvoice-description-200").html(responseLightning200_description.substring(responseLightning200_description_break));
+                                $("#examples-Fees-banksGet-title-200").text("Status: 200 - " + responseFees200_description.substring(0, responseFees200_description_break));
+                                $("#examples-Fees-banksGet-description-200").html(responseFees200_description.substring(responseFees200_description_break));
                               }
                             </script>
-
-
-                            <ul id="responses-detail-Lightning-requestLightningInvoice-200" class="nav nav-tabs nav-tabs-examples" >
-                                <li class="active">
-                                  <a data-toggle="tab" href="#responses-Lightning-requestLightningInvoice-200-schema">Schema</a>
-                                </li>
-
-
-
-
-                            </ul>
-
-
-                            <div class="tab-content" id="responses-Lightning-requestLightningInvoice-200-wrapper" style='margin-bottom: 10px;'>
-                                <div class="tab-pane active" id="responses-Lightning-requestLightningInvoice-200-schema">
-                                  <div id="responses-Lightning-requestLightningInvoice-schema-200" class="exampleStyle">
+                            <div class="tab-content" id="responses-Fees-banksGet-200-wrapper" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-Fees-banksGet-200-schema">
+                                  <div id="responses-Fees-banksGet-schema-200" class="exampleStyle">
                                     <script>
                                       $(document).ready(function() {
                                         var schemaWrapper = {
-  "description" : "successful operation",
+  "description" : "Sucessful Response",
   "content" : {
     "application/json" : {
       "schema" : {
-        "$ref" : "#/components/schemas/RequestLightningInvoicePayload"
+        "$ref" : "#/components/schemas/WithdrawalProvidersResponse"
       }
     }
   }
@@ -1274,14 +1293,526 @@ $(document).ready(function() {
                                         }
 
                                         var view = new JSONSchemaView(schema, 3);
-                                        $('#responses-Lightning-requestLightningInvoice-200-schema-data').val(JSON.stringify(schema));
-                                        var result = $('#responses-Lightning-requestLightningInvoice-schema-200');
+                                        $('#responses-Fees-banksGet-200-schema-data').val(JSON.stringify(schema));
+                                        var result = $('#responses-Fees-banksGet-schema-200');
                                         result.empty();
                                         result.append(view.render());
                                       });
                                     </script>
                                   </div>
-                                  <input id='responses-Lightning-requestLightningInvoice-200-schema-data' type='hidden' value=''></input>
+                                  <input id='responses-Fees-banksGet-200-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+                        </article>
+                      </div>
+                      <hr>
+                    <div id="api-Fees-getRatesPost">
+                      <article id="api-Fees-getRatesPost-0" data-group="User" data-name="getRatesPost" data-version="0">
+                        <div class="pull-left">
+                          <h1 class='apiHeader'>Get Fee Info</h1>
+                        </div>
+                        <div class="pull-right"></div>
+                        <div class="clearfix"></div>
+                        <p></p>
+                        <p class="marked">Returns info about our BTC/local currency rates and transaction fees</p>
+                        <br/>
+                        <h3>Request Format</h3>
+                        <span><p class="language-html" data-type="post">post</p><p class="inlineBlock dullDark">/getRates</p></span>
+
+
+                            <h3 style="margin-top:10px;">Body</h3>
+                                <script>
+$(document).ready(function() {
+  var schemaWrapper = {
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/GetRatesRequest"
+      },
+      "example" : {
+        "orgId" : "PlatapusCorp",
+        "amount_btc" : 0.001,
+        "currency" : "mxn"
+      }
+    }
+  },
+  "required" : true
+};
+
+  var schema = findNode('schema',schemaWrapper).schema;
+  if (!schema) {
+    schema = schemaWrapper.schema;
+  }
+  if (schema.$ref != null) {
+    schema = defsParser.$refs.get(schema.$ref);
+  } else {
+    schemaWrapper.definitions = Object.assign({}, defs);
+    $RefParser.dereference(schemaWrapper).catch(function(err) {
+      console.log(err);
+    });
+  }
+
+  var view = new JSONSchemaView(schema,2,{isBodyParam: true});
+  var result = $('#d2e199_getRatesPost_getRatesRequest');
+  result.empty();
+  result.append(view.render());
+});
+</script>
+<div class="tab-content" id="responses-GetRatesRequest-getRatesPost--wrapper">
+    <div class="exampleStyle">
+        <div id="d2e199_getRatesPost_getRatesRequest"></div>
+    </div>
+</div>
+
+
+
+                        <br/>
+                        <h3 style="margin-bottom: 0px;">Usage</h3>
+                        <div class="tab-content" style="border: none; background-color: transparent;" >
+                          <div class="tab-pane active" id="examples-Fees-getRatesPost-0-curl">
+                            <pre class="prettyprint"><code class="language-bsh">curl -X POST \
+ -H "Accept: application/json" \
+ -H "Content-Type: application/json" \
+ "http://api.relampago.cash/getRates" \
+ -d '{
+  &quot;currency&quot; : &quot;currency&quot;,
+  &quot;amount_btc&quot; : 0.8008281904610115,
+  &quot;orgId&quot; : &quot;orgId&quot;
+}'
+</code></pre>
+                          </div>
+                        </div>
+
+                            <h3>Response</h3>
+                            <p id="examples-Fees-getRatesPost-description-200" class="marked"></p>
+                            <script>
+                              var responseFees200_description = `Successful Response`;
+                              var responseFees200_description_break = responseFees200_description.indexOf('\n');
+                              if (responseFees200_description_break == -1) {
+                                $("#examples-Fees-getRatesPost-title-200").text("Status: 200 - " + responseFees200_description);
+                              } else {
+                                $("#examples-Fees-getRatesPost-title-200").text("Status: 200 - " + responseFees200_description.substring(0, responseFees200_description_break));
+                                $("#examples-Fees-getRatesPost-description-200").html(responseFees200_description.substring(responseFees200_description_break));
+                              }
+                            </script>
+                            <div class="tab-content" id="responses-Fees-getRatesPost-200-wrapper" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-Fees-getRatesPost-200-schema">
+                                  <div id="responses-Fees-getRatesPost-schema-200" class="exampleStyle">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "Successful Response",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/GetRatesResponse"
+      }
+    }
+  }
+};
+                                        var schema = findNode('schema',schemaWrapper).schema;
+                                        if (!schema) {
+                                          schema = schemaWrapper.schema;
+                                        }
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else if (schema.items != null && schema.items.$ref != null) {
+                                            schema.items = defsParser.$refs.get(schema.items.$ref);
+                                        } else {
+                                          schemaWrapper.definitions = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-Fees-getRatesPost-200-schema-data').val(JSON.stringify(schema));
+                                        var result = $('#responses-Fees-getRatesPost-schema-200');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-Fees-getRatesPost-200-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+                        </article>
+                      </div>
+                      <hr>
+                  </section>
+                <section id="api-Orders">
+                  <h1>Orders</h1>
+                    <div id="api-Orders-orderGet">
+                      <article id="api-Orders-orderGet-0" data-group="User" data-name="orderGet" data-version="0">
+                        <div class="pull-left">
+                          <h1 class='apiHeader'>Get Order Status</h1>
+                        </div>
+                        <div class="pull-right"></div>
+                        <div class="clearfix"></div>
+                        <p></p>
+                        <p class="marked">Returns the status of the payment after we&#39;ve received a paid LN invoice</p>
+                        <br/>
+                        <h3>Request Format</h3>
+                        <span><p class="language-html" data-type="get">get</p><p class="inlineBlock dullDark">/order</p></span>
+
+
+
+
+                            <h3 style="margin-top:10px;">Query Parameters</h3>
+                            <table id="methodsubtable">
+                              <tr>
+                                <th width="150px">Name</th>
+                                <th width="150px">Type</th>
+                                <th>Description</th>
+                              </tr>
+                                <tr><td style="width:150px;">txId</td>
+<td style="width:150px;">
+    <span class="type">
+        String
+    </span>
+</td>
+<td>
+
+
+    <div id="d2e199_orderGet_txId">
+        <div class="json-schema-view">
+            <div class="primitive">
+                    <div class="marked">
+id of the transaction in our system
+                    </div>
+            </div>
+        </div>
+    </div>
+</td>
+</tr>
+
+                            </table>
+                        <br/>
+                        <h3 style="margin-bottom: 0px;">Usage</h3>
+                        <div class="tab-content" style="border: none; background-color: transparent;" >
+                          <div class="tab-pane active" id="examples-Orders-orderGet-0-curl">
+                            <pre class="prettyprint"><code class="language-bsh">curl -X GET \
+ -H "Accept: application/json" \
+ "http://api.relampago.cash/order?txId=0x123..."
+</code></pre>
+                          </div>
+                        </div>
+
+                            <h3>Response</h3>
+                            <p id="examples-Orders-orderGet-description-200" class="marked"></p>
+                            <script>
+                              var responseOrders200_description = `Sucessful Response`;
+                              var responseOrders200_description_break = responseOrders200_description.indexOf('\n');
+                              if (responseOrders200_description_break == -1) {
+                                $("#examples-Orders-orderGet-title-200").text("Status: 200 - " + responseOrders200_description);
+                              } else {
+                                $("#examples-Orders-orderGet-title-200").text("Status: 200 - " + responseOrders200_description.substring(0, responseOrders200_description_break));
+                                $("#examples-Orders-orderGet-description-200").html(responseOrders200_description.substring(responseOrders200_description_break));
+                              }
+                            </script>
+                            <div class="tab-content" id="responses-Orders-orderGet-200-wrapper" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-Orders-orderGet-200-schema">
+                                  <div id="responses-Orders-orderGet-schema-200" class="exampleStyle">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "Sucessful Response",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/PaymentStatusResponse"
+      }
+    }
+  }
+};
+                                        var schema = findNode('schema',schemaWrapper).schema;
+                                        if (!schema) {
+                                          schema = schemaWrapper.schema;
+                                        }
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else if (schema.items != null && schema.items.$ref != null) {
+                                            schema.items = defsParser.$refs.get(schema.items.$ref);
+                                        } else {
+                                          schemaWrapper.definitions = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-Orders-orderGet-200-schema-data').val(JSON.stringify(schema));
+                                        var result = $('#responses-Orders-orderGet-schema-200');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-Orders-orderGet-200-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+                        </article>
+                      </div>
+                      <hr>
+                    <div id="api-Orders-orderPost">
+                      <article id="api-Orders-orderPost-0" data-group="User" data-name="orderPost" data-version="0">
+                        <div class="pull-left">
+                          <h1 class='apiHeader'>Request Lightning Invoice</h1>
+                        </div>
+                        <div class="pull-right"></div>
+                        <div class="clearfix"></div>
+                        <p></p>
+                        <p class="marked">Requests a lightning invoice to be generated for some end-user within the Mexican SPEI financial network. The user must have a valid CLABE number, and their name provided in the request must match that associated with their CLABE number.</p>
+                        <br/>
+                        <h3>Request Format</h3>
+                        <span><p class="language-html" data-type="post">post</p><p class="inlineBlock dullDark">/order</p></span>
+
+
+                            <h3 style="margin-top:10px;">Body</h3>
+                                <script>
+$(document).ready(function() {
+  var schemaWrapper = {
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/LnInvoiceRequest"
+      }
+    }
+  },
+  "required" : true
+};
+
+  var schema = findNode('schema',schemaWrapper).schema;
+  if (!schema) {
+    schema = schemaWrapper.schema;
+  }
+  if (schema.$ref != null) {
+    schema = defsParser.$refs.get(schema.$ref);
+  } else {
+    schemaWrapper.definitions = Object.assign({}, defs);
+    $RefParser.dereference(schemaWrapper).catch(function(err) {
+      console.log(err);
+    });
+  }
+
+  var view = new JSONSchemaView(schema,2,{isBodyParam: true});
+  var result = $('#d2e199_orderPost_lnInvoiceRequest');
+  result.empty();
+  result.append(view.render());
+});
+</script>
+<div class="tab-content" id="responses-LnInvoiceRequest-orderPost--wrapper">
+    <div class="exampleStyle">
+        <div id="d2e199_orderPost_lnInvoiceRequest"></div>
+    </div>
+</div>
+
+
+
+                        <br/>
+                        <h3 style="margin-bottom: 0px;">Usage</h3>
+                        <div class="tab-content" style="border: none; background-color: transparent;" >
+                          <div class="tab-pane active" id="examples-Orders-orderPost-0-curl">
+                            <pre class="prettyprint"><code class="language-bsh">curl -X POST \
+ -H "Accept: application/json" \
+ -H "Content-Type: application/json" \
+ "http://api.relampago.cash/order" \
+ -d '{
+  &quot;withdrawal_method&quot; : &quot;debit card&quot;,
+  &quot;benificary&quot; : &quot;Jose Medina&quot;,
+  &quot;amount_btc&quot; : 0.001,
+  &quot;institution_name&quot; : &quot;BBVA&quot;,
+  &quot;clabe&quot; : &quot;139456293583293684&quot;
+}'
+</code></pre>
+                          </div>
+                        </div>
+
+                            <h3>Response</h3>
+                            <p id="examples-Orders-orderPost-description-200" class="marked"></p>
+                            <script>
+                              var responseOrders200_description = `nothing`;
+                              var responseOrders200_description_break = responseOrders200_description.indexOf('\n');
+                              if (responseOrders200_description_break == -1) {
+                                $("#examples-Orders-orderPost-title-200").text("Status: 200 - " + responseOrders200_description);
+                              } else {
+                                $("#examples-Orders-orderPost-title-200").text("Status: 200 - " + responseOrders200_description.substring(0, responseOrders200_description_break));
+                                $("#examples-Orders-orderPost-description-200").html(responseOrders200_description.substring(responseOrders200_description_break));
+                              }
+                            </script>
+                            <div class="tab-content" id="responses-Orders-orderPost-200-wrapper" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-Orders-orderPost-200-schema">
+                                  <div id="responses-Orders-orderPost-schema-200" class="exampleStyle">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "nothing",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/LnInvoiceResponse"
+      }
+    }
+  }
+};
+                                        var schema = findNode('schema',schemaWrapper).schema;
+                                        if (!schema) {
+                                          schema = schemaWrapper.schema;
+                                        }
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else if (schema.items != null && schema.items.$ref != null) {
+                                            schema.items = defsParser.$refs.get(schema.items.$ref);
+                                        } else {
+                                          schemaWrapper.definitions = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-Orders-orderPost-200-schema-data').val(JSON.stringify(schema));
+                                        var result = $('#responses-Orders-orderPost-schema-200');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-Orders-orderPost-200-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+                        </article>
+                      </div>
+                      <hr>
+                  </section>
+                <section id="api-Verification">
+                  <h1>Verification</h1>
+                    <div id="api-Verification-verifyRecipientBankAccountPost">
+                      <article id="api-Verification-verifyRecipientBankAccountPost-0" data-group="User" data-name="verifyRecipientBankAccountPost" data-version="0">
+                        <div class="pull-left">
+                          <h1 class='apiHeader'>Verify Recipient</h1>
+                        </div>
+                        <div class="pull-right"></div>
+                        <div class="clearfix"></div>
+                        <p></p>
+                        <p class="marked">verify that a recipient&#39;s bank account info is valid</p>
+                        <br/>
+                        <h3>Request Format</h3>
+                        <span><p class="language-html" data-type="post">post</p><p class="inlineBlock dullDark">/verifyRecipientBankAccount</p></span>
+
+
+                            <h3 style="margin-top:10px;">Body</h3>
+                                <script>
+$(document).ready(function() {
+  var schemaWrapper = {
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/VerifyBankAccountRequest"
+      }
+    }
+  },
+  "required" : true
+};
+
+  var schema = findNode('schema',schemaWrapper).schema;
+  if (!schema) {
+    schema = schemaWrapper.schema;
+  }
+  if (schema.$ref != null) {
+    schema = defsParser.$refs.get(schema.$ref);
+  } else {
+    schemaWrapper.definitions = Object.assign({}, defs);
+    $RefParser.dereference(schemaWrapper).catch(function(err) {
+      console.log(err);
+    });
+  }
+
+  var view = new JSONSchemaView(schema,2,{isBodyParam: true});
+  var result = $('#d2e199_verifyRecipientBankAccountPost_verifyBankAccountRequest');
+  result.empty();
+  result.append(view.render());
+});
+</script>
+<div class="tab-content" id="responses-VerifyBankAccountRequest-verifyRecipientBankAccountPost--wrapper">
+    <div class="exampleStyle">
+        <div id="d2e199_verifyRecipientBankAccountPost_verifyBankAccountRequest"></div>
+    </div>
+</div>
+
+
+
+                        <br/>
+                        <h3 style="margin-bottom: 0px;">Usage</h3>
+                        <div class="tab-content" style="border: none; background-color: transparent;" >
+                          <div class="tab-pane active" id="examples-Verification-verifyRecipientBankAccountPost-0-curl">
+                            <pre class="prettyprint"><code class="language-bsh">curl -X POST \
+ -H "Accept: application/json" \
+ -H "Content-Type: application/json" \
+ "http://api.relampago.cash/verifyRecipientBankAccount" \
+ -d '{
+  &quot;withdrawal_method&quot; : &quot;debit card&quot;,
+  &quot;benificary&quot; : &quot;Jose Medina&quot;,
+  &quot;phone_number&quot; : &quot;+52 349 393 1904&quot;,
+  &quot;institution_name&quot; : &quot;BBVA&quot;,
+  &quot;clabe&quot; : &quot;139456293583293684&quot;,
+  &quot;debit_card&quot; : &quot;6920 3939 3929 4739&quot;
+}'
+</code></pre>
+                          </div>
+                        </div>
+
+                            <h3>Response</h3>
+                            <p id="examples-Verification-verifyRecipientBankAccountPost-description-200" class="marked"></p>
+                            <script>
+                              var responseVerification200_description = `Successful Response`;
+                              var responseVerification200_description_break = responseVerification200_description.indexOf('\n');
+                              if (responseVerification200_description_break == -1) {
+                                $("#examples-Verification-verifyRecipientBankAccountPost-title-200").text("Status: 200 - " + responseVerification200_description);
+                              } else {
+                                $("#examples-Verification-verifyRecipientBankAccountPost-title-200").text("Status: 200 - " + responseVerification200_description.substring(0, responseVerification200_description_break));
+                                $("#examples-Verification-verifyRecipientBankAccountPost-description-200").html(responseVerification200_description.substring(responseVerification200_description_break));
+                              }
+                            </script>
+                            <div class="tab-content" id="responses-Verification-verifyRecipientBankAccountPost-200-wrapper" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-Verification-verifyRecipientBankAccountPost-200-schema">
+                                  <div id="responses-Verification-verifyRecipientBankAccountPost-schema-200" class="exampleStyle">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "Successful Response",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/VerifyBankAccountResponse"
+      }
+    }
+  }
+};
+                                        var schema = findNode('schema',schemaWrapper).schema;
+                                        if (!schema) {
+                                          schema = schemaWrapper.schema;
+                                        }
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else if (schema.items != null && schema.items.$ref != null) {
+                                            schema.items = defsParser.$refs.get(schema.items.$ref);
+                                        } else {
+                                          schemaWrapper.definitions = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-Verification-verifyRecipientBankAccountPost-200-schema-data').val(JSON.stringify(schema));
+                                        var result = $('#responses-Verification-verifyRecipientBankAccountPost-schema-200');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-Verification-verifyRecipientBankAccountPost-200-schema-data' type='hidden' value=''></input>
                                 </div>
                             </div>
                         </article>
