@@ -321,6 +321,7 @@
                                         if (!schema) {
                                           schema = schemaWrapper.schema;
                                         }
+                                        
                                         if (schema.$ref != null) {
                                           schema = defsParser.$refs.get(schema.$ref);
                                         } else if (schema.items != null && schema.items.$ref != null) {
@@ -332,11 +333,22 @@
                                           });
                                         }
 
-                                        var view = new JSONSchemaView(schema, 3);
-                                        $('#responses-{{baseName}}-{{nickname}}-{{code}}-schema-data').val(JSON.stringify(schema));
+                                        //removes 'desc' attribute when passing to response so we don't get double descriptions
+                                        var modifiedSchema = structuredClone(schema);
+                                        modifiedSchema['description']=null;
+                                        //console.log('MODIFIED SCHEMA'+JSON.stringify(modifiedSchema));
+                                        modifiedSchema['desc']=null;
+                                        var view = new JSONSchemaView(modifiedSchema, 3);
+                                        $('#responses-{{baseName}}-{{nickname}}-{{code}}-schema-data').val(JSON.stringify(modifiedSchema));
+                                        //console.log("DESC "+schema['description']);
                                         var result = $('#responses-{{baseName}}-{{nickname}}-schema-{{code}}');
                                         result.empty();
+                                        let p=document.createElement("p");
+                                        p.append(schema.description);
+                                        console.log(schema);
+                                        result.append(p)
                                         result.append(view.render());
+                    
                                       });
                                     </script>
                                   </div>
