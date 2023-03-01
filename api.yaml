@@ -1,8 +1,8 @@
 openapi: 3.0.1
 servers:
-  - url: 'http://api.relampago.cash/'
+  - url: 'http://relampago.cash/api/v1'
 info:
-  description: These are specifications for using the Relampago API. Relampago allows for Bitcoin Lightning users to offramp their Lightning Bitcoin onto any SPEI-compatible account within the Mexican fiat financial network. Relampago offers instant settlement into MXN during work hours, and same-day settlement on weekends. Relampago maintains the service level agreement that once an invoice has been successfully generated for a valid user, and Lightning Bitcoin has been paid to the invoice, that peso amount will be successfully delivered to the user. 
+  description: These are specifications for using the Relampago API. Relampago allows for Bitcoin Lightning users to offramp their Lightning Bitcoin into any Mexican bank account over the SPEI network. Recipients can receive using a phone number, debit card, or a traditional bank account. Relampago offers instant settlement into MXN during work hours, and same-day settlement on weekends. Relampago maintains the service level agreement that once an invoice has been successfully generated for a valid user, and Lightning Bitcoin has been paid to the invoice, that peso amount will be successfully delivered to the user. 
   version: 1.0.0
   title: Relampago API Specifications
 tags:
@@ -11,7 +11,7 @@ tags:
   - name: Verification
 
 paths:
-  /getRates:
+  /rates:
     post:
       tags:
         - Fees
@@ -41,7 +41,7 @@ paths:
       tags:
         - Verification
       summary: Verify Recipient
-      description: verify that a recipient's bank account info is valid
+      description: Verifies that a recipient's bank account info is valid. Depending on the method ("debit card", "phone number","clabe"), some fields will be required. For example for sending to a bank account, the "method", "clabe", "beneficiary", and "institution_name" field are required 
 
       requestBody:
         
@@ -85,7 +85,7 @@ paths:
       tags:
         - Orders
       summary: Request Lightning Invoice
-      description: Requests a lightning invoice to be generated for some end-user within the Mexican SPEI financial network. The user must have a valid CLABE number, and their name provided in the request must match that associated with their CLABE number.
+      description: Requests a lightning invoice to be generated for some end-user within the Mexican SPEI financial network. Relampago supports sending to a bank account (CLABE), a debit card, or a phone number.
       requestBody:
         required: true
         content:
@@ -103,9 +103,9 @@ paths:
   /banks:
     get:
       tags:
-        - Fees
+        - Info
       summary: Get Banks
-      description: Returns a comprehensive list of banks that we can withdraw to
+      description: Returns a comprehensive list of banks to which we can send local currency 
       parameters:
         - in: query
           name: countryCode
@@ -149,7 +149,6 @@ components:
       required:
         - amount
         - name
-        - clabe
       properties:
         amount:
           type: integer
@@ -170,17 +169,21 @@ components:
       properties:
         orgId:
           type: string
+          example: PlatapusCorp
         amount_btc:
           type: number
           format: double
+          example: .001
         currency:
           type: string
+          example: mxn
       required:
         - id
         - amount_btc
         - orgId
     GetRatesResponse:
       type: object
+      description: Returns whether the request was successful, the BTC / Local Currency rate we use, the total fee applied to the transaction as a percent, and the exact amount of local currency that the recipient receives
       properties:
         rate:
           type: number
@@ -205,7 +208,7 @@ components:
           type: number
           format: double
           example: .001
-        benificary:
+        beneficary:
           type: string
           example: Jose Medina
         clabe:
@@ -214,12 +217,13 @@ components:
         institution_name:
           type: string
           example: BBVA
-        withdrawal_method:
+        method:
           type: string
           example: debit card
           
     LnInvoiceResponse:
       type: object
+      description: Returns whether the request was successful, the transactionId in our system and a Lightning invoice with a one minute expiry
       properties:
         success:
           type: boolean
@@ -232,6 +236,7 @@ components:
           
     PaymentStatusResponse:
       type: object
+      description: Returns whether the request was successful, the transaction id in our system, and the payment status ('complete','pending', etc)
       properties:
         success:
           type: boolean
@@ -246,29 +251,33 @@ components:
     VerifyBankAccountRequest:
       type: object
       properties:
-        benificary:
+        beneficary:
           type: string
           example: Jose Medina
         clabe:
           type: string
-          example: 139456293583293684
+          example: "null"
         institution_name:
           type: string
           example: BBVA
-        withdrawal_method:
+        method:
           type: string
           example: debit card
         phone_number:
           type: string
-          example: +52 349 393 1904
+          example: "null"
         debit_card:
           type: string
           example: 6920 3939 3929 4739
           
     VerifyBankAccountResponse:
       type: object
+      description: Returns whether the request was successful, whether the bank account was verified and a corresponding message like "successfully verified" or "incorrect clabe" in case of error
       properties:
         success:
+          type: boolean
+          example: true
+        verified: 
           type: boolean
           example: true
         message:
@@ -277,6 +286,7 @@ components:
           
     WithdrawalProvidersResponse:
       type: object
+      description: 'Returns whether the request was successful and a list of corresponding banks to which Relampago can send'
       properties:
         success:
           type: boolean
