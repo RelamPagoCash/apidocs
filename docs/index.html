@@ -965,17 +965,17 @@ td .json-schema-view * {
     // Script section to load models into a JS Var
     var defs = {}
     defs["GetRatesRequest"] = {
-  "required" : [ "amount_btc", "id", "orgId" ],
+  "required" : [ "amountBtc", "id", "orgId" ],
   "type" : "object",
   "properties" : {
     "orgId" : {
       "type" : "string",
       "example" : "PlatapusCorp"
     },
-    "amount_btc" : {
+    "amountBtc" : {
       "type" : "number",
-      "format" : "double",
-      "example" : 0.001
+      "format" : "string",
+      "example" : 1000000
     },
     "currency" : {
       "type" : "string",
@@ -1000,13 +1000,9 @@ td .json-schema-view * {
       "type" : "number",
       "format" : "double",
       "example" : 400.58
-    },
-    "success" : {
-      "type" : "boolean",
-      "example" : true
     }
   },
-  "description" : "Returns whether the request was successful, the BTC / Local Currency rate we use, the total fee applied to the transaction as a percent, and the exact amount of local currency that the recipient receives"
+  "description" : "Returns the BTC / Local Currency rate we use, the total fee applied to the transaction as a percent, and the exact amount of local currency that the recipient receives"
 };
     defs["LightningInvoiceRequest"] = {
   "title" : "Lightning Invoice Request",
@@ -1036,12 +1032,11 @@ td .json-schema-view * {
     defs["LnInvoiceRequest"] = {
   "type" : "object",
   "properties" : {
-    "amount_btc" : {
-      "type" : "number",
-      "format" : "double",
-      "example" : 0.001
+    "amountBtc" : {
+      "type" : "string",
+      "example" : "1000000"
     },
-    "beneficary" : {
+    "beneficiary" : {
       "type" : "string",
       "example" : "Jose Medina"
     },
@@ -1049,40 +1044,40 @@ td .json-schema-view * {
       "type" : "string",
       "example" : "139456293583293684"
     },
-    "institution_name" : {
+    "institutionName" : {
       "type" : "string",
       "example" : "BBVA"
     },
     "method" : {
       "type" : "string",
-      "example" : "debit card"
+      "example" : "clabe"
+    },
+    "debitCard" : {
+      "type" : "string",
+      "example" : ""
+    },
+    "phoneNumber" : {
+      "type" : "string",
+      "example" : ""
     }
   }
 };
     defs["LnInvoiceResponse"] = {
   "type" : "object",
   "properties" : {
-    "success" : {
-      "type" : "boolean",
-      "example" : true
-    },
     "txId" : {
       "type" : "string",
       "example" : "d3993-a59"
     },
-    "ln_invoice" : {
+    "lnInvoice" : {
       "type" : "string"
     }
   },
-  "description" : "Returns whether the request was successful, the transactionId in our system and a Lightning invoice with a one minute expiry"
+  "description" : "Returns the transactionId in our system and a Lightning invoice with a one minute expiry"
 };
     defs["PaymentStatusResponse"] = {
   "type" : "object",
   "properties" : {
-    "success" : {
-      "type" : "boolean",
-      "example" : true
-    },
     "txId" : {
       "type" : "string",
       "example" : "d3993-a59"
@@ -1092,7 +1087,7 @@ td .json-schema-view * {
       "example" : "pending"
     }
   },
-  "description" : "Returns whether the request was successful, the transaction id in our system, and the payment status ('complete','pending', etc)"
+  "description" : "Returns the transaction id in our system, and the payment status ('complete','pending', etc)"
 };
     defs["RequestLightningInvoicePayload"] = {
   "title" : "Lightning Invoice Request",
@@ -1105,17 +1100,18 @@ td .json-schema-view * {
   }
 };
     defs["VerifyBankAccountRequest"] = {
+  "required" : [ "beneficiary", "institutionName", "method" ],
   "type" : "object",
   "properties" : {
-    "beneficary" : {
+    "beneficiary" : {
       "type" : "string",
       "example" : "Jose Medina"
     },
     "clabe" : {
       "type" : "string",
-      "example" : "null"
+      "example" : ""
     },
-    "institution_name" : {
+    "institutionName" : {
       "type" : "string",
       "example" : "BBVA"
     },
@@ -1123,23 +1119,19 @@ td .json-schema-view * {
       "type" : "string",
       "example" : "debit card"
     },
-    "phone_number" : {
+    "phoneNumber" : {
       "type" : "string",
-      "example" : "null"
+      "example" : ""
     },
-    "debit_card" : {
+    "debitCard" : {
       "type" : "string",
-      "example" : "6920 3939 3929 4739"
+      "example" : "3949 3939 9533 1039"
     }
   }
 };
     defs["VerifyBankAccountResponse"] = {
   "type" : "object",
   "properties" : {
-    "success" : {
-      "type" : "boolean",
-      "example" : true
-    },
     "verified" : {
       "type" : "boolean",
       "example" : true
@@ -1149,15 +1141,11 @@ td .json-schema-view * {
       "example" : "successfully verified bank account info"
     }
   },
-  "description" : "Returns whether the request was successful, whether the bank account was verified and a corresponding message like \"successfully verified\" or \"incorrect clabe\" in case of error"
+  "description" : "Returns whether the bank account was verified and a corresponding message like \"successfully verified\" or \"incorrect clabe\" in case of error"
 };
     defs["WithdrawalProvidersResponse"] = {
   "type" : "object",
   "properties" : {
-    "success" : {
-      "type" : "boolean",
-      "example" : true
-    },
     "payload" : {
       "type" : "array",
       "items" : {
@@ -1178,7 +1166,7 @@ td .json-schema-view * {
       }
     }
   },
-  "description" : "Returns whether the request was successful and a list of corresponding banks to which Relampago can send"
+  "description" : "Returns a list of corresponding banks to which Relampago can send"
 };
 
     var errs = {};
@@ -1199,10 +1187,6 @@ td .json-schema-view * {
             <img src="./relampago.png" class="icon"/>
             <li class="nav-fixed nav-header active" data-group="_"><a href="#top">API Summary</a></li>
 
-                  <li class="nav-category" data-group="Fees"><a href="#api-Fees">Fees</a></li>
-                    <li data-group="Fees" data-name="ratesPost" class="sideItem">
-                      <a href="#api-Fees-ratesPost">Get Fee Info</a>
-                    </li>
                   <li class="nav-category" data-group="Info"><a href="#api-Info">Info</a></li>
                     <li data-group="Info" data-name="banksGet" class="sideItem">
                       <a href="#api-Info-banksGet">Get Banks</a>
@@ -1214,9 +1198,13 @@ td .json-schema-view * {
                     <li data-group="Orders" data-name="orderPost" class="sideItem">
                       <a href="#api-Orders-orderPost">Request Lightning Invoice</a>
                     </li>
+                  <li class="nav-category" data-group="Rates"><a href="#api-Rates">Rates</a></li>
+                    <li data-group="Rates" data-name="ratesGet" class="sideItem">
+                      <a href="#api-Rates-ratesGet">Get Rates Info</a>
+                    </li>
                   <li class="nav-category" data-group="Verification"><a href="#api-Verification">Verification</a></li>
-                    <li data-group="Verification" data-name="verifyRecipientBankAccountPost" class="sideItem">
-                      <a href="#api-Verification-verifyRecipientBankAccountPost">Verify Recipient</a>
+                    <li data-group="Verification" data-name="verifyPost" class="sideItem">
+                      <a href="#api-Verification-verifyPost">Verify Recipient</a>
                     </li>
           </ul>
         </nav>
@@ -1241,154 +1229,6 @@ td .json-schema-view * {
         </div>
         <hr/>
         <div id="sections">
-                <section id="api-Fees">
-                  <h1>Fees</h1>
-                    <div id="api-Fees-ratesPost">
-                      <article id="api-Fees-ratesPost-0" data-group="User" data-name="ratesPost" data-version="0">
-                        <div class="pull-left">
-                          <h1 class='apiHeader'>Get Fee Info</h1>
-                        </div>
-                        <div class="pull-right"></div>
-                        <div class="clearfix"></div>
-                        <p></p>
-                        <p class="marked">Returns info about our BTC/local currency rates and transaction fees</p>
-                        <br/>
-                        <h3>Request Format</h3>
-                        <span><p class="language-html" data-type="post">post</p><p class="inlineBlock dullDark">/rates</p></span>
-
-
-                            <h3 style="margin-top:10px;">Body</h3>
-                                <script>
-$(document).ready(function() {
-  var schemaWrapper = {
-  "content" : {
-    "application/json" : {
-      "schema" : {
-        "$ref" : "#/components/schemas/GetRatesRequest"
-      },
-      "example" : {
-        "orgId" : "PlatapusCorp",
-        "amount_btc" : 0.001,
-        "currency" : "mxn"
-      }
-    }
-  },
-  "required" : true
-};
-
-  var schema = findNode('schema',schemaWrapper).schema;
-  if (!schema) {
-    schema = schemaWrapper.schema;
-  }
-  if (schema.$ref != null) {
-    schema = defsParser.$refs.get(schema.$ref);
-  } else {
-    schemaWrapper.definitions = Object.assign({}, defs);
-    $RefParser.dereference(schemaWrapper).catch(function(err) {
-      console.log(err);
-    });
-  }
-
-  var view = new JSONSchemaView(schema,2,{isBodyParam: true});
-  var result = $('#d2e199_ratesPost_getRatesRequest');
-  result.empty();
-  result.append(view.render());
-});
-</script>
-<div class="tab-content" id="responses-GetRatesRequest-ratesPost--wrapper">
-    <div class="exampleStyle">
-        <div id="d2e199_ratesPost_getRatesRequest"></div>
-    </div>
-</div>
-
-
-
-                        <br/>
-                        <h3 style="margin-bottom: 0px;">Usage</h3>
-                        <div class="tab-content" style="border: none; background-color: transparent;" >
-                          <div class="tab-pane active" id="examples-Fees-ratesPost-0-curl">
-                            <pre class="prettyprint"><code class="language-bsh">curl -X POST \
- -H "Accept: application/json" \
- -H "Content-Type: application/json" \
- "http://relampago.cash/api/v1/rates" \
- -d '{
-  &quot;currency&quot; : &quot;mxn&quot;,
-  &quot;amount_btc&quot; : 0.001,
-  &quot;orgId&quot; : &quot;PlatapusCorp&quot;
-}'
-</code></pre>
-                          </div>
-                        </div>
-
-                            <h3>Response</h3>
-                            <p id="examples-Fees-ratesPost-description-200" class="marked"></p>
-                            <script>
-                              var responseFees200_description = `Successful Response`;
-                              var responseFees200_description_break = responseFees200_description.indexOf('\n');
-                              if (responseFees200_description_break == -1) {
-                                $("#examples-Fees-ratesPost-title-200").text("Status: 200 - " + responseFees200_description);
-                              } else {
-                                $("#examples-Fees-ratesPost-title-200").text("Status: 200 - " + responseFees200_description.substring(0, responseFees200_description_break));
-                                $("#examples-Fees-ratesPost-description-200").html(responseFees200_description.substring(responseFees200_description_break));
-                              }
-                            </script>
-                            <div class="tab-content" id="responses-Fees-ratesPost-200-wrapper" style='margin-bottom: 10px;'>
-                                <div class="tab-pane active" id="responses-Fees-ratesPost-200-schema">
-                                  <div id="responses-Fees-ratesPost-schema-200" class="exampleStyle">
-                                    <script>
-                                      $(document).ready(function() {
-                                        var schemaWrapper = {
-  "description" : "Successful Response",
-  "content" : {
-    "application/json" : {
-      "schema" : {
-        "$ref" : "#/components/schemas/GetRatesResponse"
-      }
-    }
-  }
-};
-                                        var schema = findNode('schema',schemaWrapper).schema;
-                                        if (!schema) {
-                                          schema = schemaWrapper.schema;
-                                        }
-                                        
-                                        if (schema.$ref != null) {
-                                          schema = defsParser.$refs.get(schema.$ref);
-                                        } else if (schema.items != null && schema.items.$ref != null) {
-                                            schema.items = defsParser.$refs.get(schema.items.$ref);
-                                        } else {
-                                          schemaWrapper.definitions = Object.assign({}, defs);
-                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
-                                            console.log(err);
-                                          });
-                                        }
-
-                                        //removes 'desc' attribute when passing to response so we don't get double descriptions
-                                        var modifiedSchema = structuredClone(schema);
-                                        modifiedSchema['description']=null;
-                                        //console.log('MODIFIED SCHEMA'+JSON.stringify(modifiedSchema));
-                                        modifiedSchema['desc']=null;
-                                        var view = new JSONSchemaView(modifiedSchema, 3);
-                                        $('#responses-Fees-ratesPost-200-schema-data').val(JSON.stringify(modifiedSchema));
-                                        //console.log("DESC "+schema['description']);
-                                        var result = $('#responses-Fees-ratesPost-schema-200');
-                                        result.empty();
-                                        let p=document.createElement("p");
-                                        p.append(schema.description);
-                                        console.log(schema);
-                                        result.append(p)
-                                        result.append(view.render());
-                    
-                                      });
-                                    </script>
-                                  </div>
-                                  <input id='responses-Fees-ratesPost-200-schema-data' type='hidden' value=''></input>
-                                </div>
-                            </div>
-                        </article>
-                      </div>
-                      <hr>
-                  </section>
                 <section id="api-Info">
                   <h1>Info</h1>
                     <div id="api-Info-banksGet">
@@ -1569,7 +1409,7 @@ id of the transaction in our system
                           <div class="tab-pane active" id="examples-Orders-orderGet-0-curl">
                             <pre class="prettyprint"><code class="language-bsh">curl -X GET \
  -H "Accept: application/json" \
- "http://relampago.cash/api/v1/order?txId=0x123..."
+ "http://relampago.cash/api/v1/order?txId=d3993-a59"
 </code></pre>
                           </div>
                         </div>
@@ -1706,10 +1546,12 @@ $(document).ready(function() {
  -H "Content-Type: application/json" \
  "http://relampago.cash/api/v1/order" \
  -d '{
-  &quot;method&quot; : &quot;debit card&quot;,
-  &quot;beneficary&quot; : &quot;Jose Medina&quot;,
-  &quot;amount_btc&quot; : 0.001,
-  &quot;institution_name&quot; : &quot;BBVA&quot;,
+  &quot;phoneNumber&quot; : &quot;&quot;,
+  &quot;beneficiary&quot; : &quot;Jose Medina&quot;,
+  &quot;method&quot; : &quot;clabe&quot;,
+  &quot;amountBtc&quot; : &quot;1000000&quot;,
+  &quot;institutionName&quot; : &quot;BBVA&quot;,
+  &quot;debitCard&quot; : &quot;&quot;,
   &quot;clabe&quot; : &quot;139456293583293684&quot;
 }'
 </code></pre>
@@ -1785,20 +1627,189 @@ $(document).ready(function() {
                       </div>
                       <hr>
                   </section>
+                <section id="api-Rates">
+                  <h1>Rates</h1>
+                    <div id="api-Rates-ratesGet">
+                      <article id="api-Rates-ratesGet-0" data-group="User" data-name="ratesGet" data-version="0">
+                        <div class="pull-left">
+                          <h1 class='apiHeader'>Get Rates Info</h1>
+                        </div>
+                        <div class="pull-right"></div>
+                        <div class="clearfix"></div>
+                        <p></p>
+                        <p class="marked">Returns info about our BTC/local currency rates and transaction fees</p>
+                        <br/>
+                        <h3>Request Format</h3>
+                        <span><p class="language-html" data-type="get">get</p><p class="inlineBlock dullDark">/rates</p></span>
+
+
+
+
+                            <h3 style="margin-top:10px;">Query Parameters</h3>
+                            <table id="methodsubtable">
+                              <tr>
+                                <th width="150px">Name</th>
+                                <th width="150px">Type</th>
+                                <th>Description</th>
+                              </tr>
+                                <tr><td style="width:150px;">orgId</td>
+<td style="width:150px;">
+    <span class="type">
+        String
+    </span>
+</td>
+<td>
+
+
+    <div id="d2e199_ratesGet_orgId">
+        <div class="json-schema-view">
+            <div class="primitive">
+                    <div class="marked">
+id of the organization in our system
+                    </div>
+            </div>
+        </div>
+    </div>
+</td>
+</tr>
+
+                                <tr><td style="width:150px;">amountBtc</td>
+<td style="width:150px;">
+    <span class="type">
+        String
+    </span>
+</td>
+<td>
+
+
+    <div id="d2e199_ratesGet_amountBtc">
+        <div class="json-schema-view">
+            <div class="primitive">
+                    <div class="marked">
+the amount of satoshis the remitter is sending
+                    </div>
+            </div>
+        </div>
+    </div>
+</td>
+</tr>
+
+                                <tr><td style="width:150px;">fiat</td>
+<td style="width:150px;">
+    <span class="type">
+        String
+    </span>
+</td>
+<td>
+
+
+    <div id="d2e199_ratesGet_fiat">
+        <div class="json-schema-view">
+            <div class="primitive">
+                    <div class="marked">
+the local fiat currency that the recipient receives
+                    </div>
+            </div>
+        </div>
+    </div>
+</td>
+</tr>
+
+                            </table>
+                        <br/>
+                        <h3 style="margin-bottom: 0px;">Usage</h3>
+                        <div class="tab-content" style="border: none; background-color: transparent;" >
+                          <div class="tab-pane active" id="examples-Rates-ratesGet-0-curl">
+                            <pre class="prettyprint"><code class="language-bsh">curl -X GET \
+ -H "Accept: application/json" \
+ "http://relampago.cash/api/v1/rates?orgId=PlatapusCorp&amountBtc=1000000&fiat=mxn"
+</code></pre>
+                          </div>
+                        </div>
+
+                            <h3>Response</h3>
+                            <p id="examples-Rates-ratesGet-description-200" class="marked"></p>
+                            <script>
+                              var responseRates200_description = `Successful Response`;
+                              var responseRates200_description_break = responseRates200_description.indexOf('\n');
+                              if (responseRates200_description_break == -1) {
+                                $("#examples-Rates-ratesGet-title-200").text("Status: 200 - " + responseRates200_description);
+                              } else {
+                                $("#examples-Rates-ratesGet-title-200").text("Status: 200 - " + responseRates200_description.substring(0, responseRates200_description_break));
+                                $("#examples-Rates-ratesGet-description-200").html(responseRates200_description.substring(responseRates200_description_break));
+                              }
+                            </script>
+                            <div class="tab-content" id="responses-Rates-ratesGet-200-wrapper" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-Rates-ratesGet-200-schema">
+                                  <div id="responses-Rates-ratesGet-schema-200" class="exampleStyle">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "Successful Response",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/GetRatesResponse"
+      }
+    }
+  }
+};
+                                        var schema = findNode('schema',schemaWrapper).schema;
+                                        if (!schema) {
+                                          schema = schemaWrapper.schema;
+                                        }
+                                        
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else if (schema.items != null && schema.items.$ref != null) {
+                                            schema.items = defsParser.$refs.get(schema.items.$ref);
+                                        } else {
+                                          schemaWrapper.definitions = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //removes 'desc' attribute when passing to response so we don't get double descriptions
+                                        var modifiedSchema = structuredClone(schema);
+                                        modifiedSchema['description']=null;
+                                        //console.log('MODIFIED SCHEMA'+JSON.stringify(modifiedSchema));
+                                        modifiedSchema['desc']=null;
+                                        var view = new JSONSchemaView(modifiedSchema, 3);
+                                        $('#responses-Rates-ratesGet-200-schema-data').val(JSON.stringify(modifiedSchema));
+                                        //console.log("DESC "+schema['description']);
+                                        var result = $('#responses-Rates-ratesGet-schema-200');
+                                        result.empty();
+                                        let p=document.createElement("p");
+                                        p.append(schema.description);
+                                        console.log(schema);
+                                        result.append(p)
+                                        result.append(view.render());
+                    
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-Rates-ratesGet-200-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+                        </article>
+                      </div>
+                      <hr>
+                  </section>
                 <section id="api-Verification">
                   <h1>Verification</h1>
-                    <div id="api-Verification-verifyRecipientBankAccountPost">
-                      <article id="api-Verification-verifyRecipientBankAccountPost-0" data-group="User" data-name="verifyRecipientBankAccountPost" data-version="0">
+                    <div id="api-Verification-verifyPost">
+                      <article id="api-Verification-verifyPost-0" data-group="User" data-name="verifyPost" data-version="0">
                         <div class="pull-left">
                           <h1 class='apiHeader'>Verify Recipient</h1>
                         </div>
                         <div class="pull-right"></div>
                         <div class="clearfix"></div>
                         <p></p>
-                        <p class="marked">Verifies that a recipient&#39;s bank account info is valid. Depending on the method (&quot;debit card&quot;, &quot;phone number&quot;,&quot;clabe&quot;), some fields will be required. For example for sending to a bank account, the &quot;method&quot;, &quot;clabe&quot;, &quot;beneficiary&quot;, and &quot;institution_name&quot; field are required</p>
+                        <p class="marked">Verifies that a recipient&#39;s bank account info is valid. Depending on the method (&quot;debit card&quot;, &quot;phone number&quot;,&quot;clabe&quot;), some fields will be required. For example for sending to a bank account, the &quot;method&quot;, &quot;clabe&quot;, &quot;beneficiary&quot;, and &quot;institutionName&quot; field are required</p>
                         <br/>
                         <h3>Request Format</h3>
-                        <span><p class="language-html" data-type="post">post</p><p class="inlineBlock dullDark">/verifyRecipientBankAccount</p></span>
+                        <span><p class="language-html" data-type="post">post</p><p class="inlineBlock dullDark">/verify</p></span>
 
 
                             <h3 style="margin-top:10px;">Body</h3>
@@ -1809,6 +1820,11 @@ $(document).ready(function() {
     "application/json" : {
       "schema" : {
         "$ref" : "#/components/schemas/VerifyBankAccountRequest"
+      },
+      "example" : {
+        "beneficiary" : "Jose",
+        "institutionName" : "bank mexico",
+        "method" : "CLABE"
       }
     }
   },
@@ -1829,14 +1845,14 @@ $(document).ready(function() {
   }
 
   var view = new JSONSchemaView(schema,2,{isBodyParam: true});
-  var result = $('#d2e199_verifyRecipientBankAccountPost_verifyBankAccountRequest');
+  var result = $('#d2e199_verifyPost_verifyBankAccountRequest');
   result.empty();
   result.append(view.render());
 });
 </script>
-<div class="tab-content" id="responses-VerifyBankAccountRequest-verifyRecipientBankAccountPost--wrapper">
+<div class="tab-content" id="responses-VerifyBankAccountRequest-verifyPost--wrapper">
     <div class="exampleStyle">
-        <div id="d2e199_verifyRecipientBankAccountPost_verifyBankAccountRequest"></div>
+        <div id="d2e199_verifyPost_verifyBankAccountRequest"></div>
     </div>
 </div>
 
@@ -1845,38 +1861,38 @@ $(document).ready(function() {
                         <br/>
                         <h3 style="margin-bottom: 0px;">Usage</h3>
                         <div class="tab-content" style="border: none; background-color: transparent;" >
-                          <div class="tab-pane active" id="examples-Verification-verifyRecipientBankAccountPost-0-curl">
+                          <div class="tab-pane active" id="examples-Verification-verifyPost-0-curl">
                             <pre class="prettyprint"><code class="language-bsh">curl -X POST \
  -H "Accept: application/json" \
  -H "Content-Type: application/json" \
- "http://relampago.cash/api/v1/verifyRecipientBankAccount" \
+ "http://relampago.cash/api/v1/verify" \
  -d '{
+  &quot;phoneNumber&quot; : &quot;&quot;,
+  &quot;beneficiary&quot; : &quot;Jose Medina&quot;,
   &quot;method&quot; : &quot;debit card&quot;,
-  &quot;beneficary&quot; : &quot;Jose Medina&quot;,
-  &quot;phone_number&quot; : &quot;null&quot;,
-  &quot;institution_name&quot; : &quot;BBVA&quot;,
-  &quot;clabe&quot; : &quot;null&quot;,
-  &quot;debit_card&quot; : &quot;6920 3939 3929 4739&quot;
+  &quot;institutionName&quot; : &quot;BBVA&quot;,
+  &quot;debitCard&quot; : &quot;3949 3939 9533 1039&quot;,
+  &quot;clabe&quot; : &quot;&quot;
 }'
 </code></pre>
                           </div>
                         </div>
 
                             <h3>Response</h3>
-                            <p id="examples-Verification-verifyRecipientBankAccountPost-description-200" class="marked"></p>
+                            <p id="examples-Verification-verifyPost-description-200" class="marked"></p>
                             <script>
                               var responseVerification200_description = `Successful Response`;
                               var responseVerification200_description_break = responseVerification200_description.indexOf('\n');
                               if (responseVerification200_description_break == -1) {
-                                $("#examples-Verification-verifyRecipientBankAccountPost-title-200").text("Status: 200 - " + responseVerification200_description);
+                                $("#examples-Verification-verifyPost-title-200").text("Status: 200 - " + responseVerification200_description);
                               } else {
-                                $("#examples-Verification-verifyRecipientBankAccountPost-title-200").text("Status: 200 - " + responseVerification200_description.substring(0, responseVerification200_description_break));
-                                $("#examples-Verification-verifyRecipientBankAccountPost-description-200").html(responseVerification200_description.substring(responseVerification200_description_break));
+                                $("#examples-Verification-verifyPost-title-200").text("Status: 200 - " + responseVerification200_description.substring(0, responseVerification200_description_break));
+                                $("#examples-Verification-verifyPost-description-200").html(responseVerification200_description.substring(responseVerification200_description_break));
                               }
                             </script>
-                            <div class="tab-content" id="responses-Verification-verifyRecipientBankAccountPost-200-wrapper" style='margin-bottom: 10px;'>
-                                <div class="tab-pane active" id="responses-Verification-verifyRecipientBankAccountPost-200-schema">
-                                  <div id="responses-Verification-verifyRecipientBankAccountPost-schema-200" class="exampleStyle">
+                            <div class="tab-content" id="responses-Verification-verifyPost-200-wrapper" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-Verification-verifyPost-200-schema">
+                                  <div id="responses-Verification-verifyPost-schema-200" class="exampleStyle">
                                     <script>
                                       $(document).ready(function() {
                                         var schemaWrapper = {
@@ -1911,9 +1927,9 @@ $(document).ready(function() {
                                         //console.log('MODIFIED SCHEMA'+JSON.stringify(modifiedSchema));
                                         modifiedSchema['desc']=null;
                                         var view = new JSONSchemaView(modifiedSchema, 3);
-                                        $('#responses-Verification-verifyRecipientBankAccountPost-200-schema-data').val(JSON.stringify(modifiedSchema));
+                                        $('#responses-Verification-verifyPost-200-schema-data').val(JSON.stringify(modifiedSchema));
                                         //console.log("DESC "+schema['description']);
-                                        var result = $('#responses-Verification-verifyRecipientBankAccountPost-schema-200');
+                                        var result = $('#responses-Verification-verifyPost-schema-200');
                                         result.empty();
                                         let p=document.createElement("p");
                                         p.append(schema.description);
@@ -1924,7 +1940,7 @@ $(document).ready(function() {
                                       });
                                     </script>
                                   </div>
-                                  <input id='responses-Verification-verifyRecipientBankAccountPost-200-schema-data' type='hidden' value=''></input>
+                                  <input id='responses-Verification-verifyPost-200-schema-data' type='hidden' value=''></input>
                                 </div>
                             </div>
                         </article>

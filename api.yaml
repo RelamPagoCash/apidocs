@@ -12,22 +12,36 @@ tags:
 
 paths:
   /rates:
-    post:
+    get:
       tags:
-        - Fees
-      summary: Get Fee Info
+        - Rates
+      summary: Get Rates Info
       description: Returns info about our BTC/local currency rates and transaction fees
-      requestBody:
 
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/GetRatesRequest'
-            example:
-              orgId: PlatapusCorp
-              amount_btc: .001
-              currency: mxn
+      parameters:
+        - in: query
+          name: orgId
+          example: "PlatapusCorp"
+          schema:
+            type: string
+          required: true
+          description: id of the organization in our system
+
+        - in: query
+          name: amountBtc
+          example: 1000000
+          schema:
+            type: string
+          required: true
+          description: the amount of satoshis the remitter is sending
+
+        - in: query
+          name: fiat
+          example: mxn
+          schema:
+            type: string
+          required: true
+          description: the local fiat currency that the recipient receives
               
       responses:
         '200':
@@ -36,12 +50,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetRatesResponse'  
-  /verifyRecipientBankAccount:
+  /verify:
     post:
       tags:
         - Verification
       summary: Verify Recipient
-      description: Verifies that a recipient's bank account info is valid. Depending on the method ("debit card", "phone number","clabe"), some fields will be required. For example for sending to a bank account, the "method", "clabe", "beneficiary", and "institution_name" field are required 
+      description: Verifies that a recipient's bank account info is valid. Depending on the method ("debit card", "phone number","clabe"), some fields will be required. For example for sending to a bank account, the "method", "clabe", "beneficiary", and "institutionName" field are required 
 
       requestBody:
         
@@ -50,6 +64,10 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/VerifyBankAccountRequest'
+            example:
+              beneficiary: Jose
+              institutionName: bank mexico
+              method: CLABE
               
       responses:
         '200':
@@ -68,7 +86,7 @@ paths:
       parameters:
         - in: query
           name: txId
-          example: "0x123..."
+          example: "d3993-a59"
           schema:
             type: string
           required: true
@@ -170,20 +188,20 @@ components:
         orgId:
           type: string
           example: PlatapusCorp
-        amount_btc:
+        amountBtc:
           type: number
-          format: double
-          example: .001
+          format: string
+          example: 1000000
         currency:
           type: string
           example: mxn
       required:
         - id
-        - amount_btc
+        - amountBtc
         - orgId
     GetRatesResponse:
       type: object
-      description: Returns whether the request was successful, the BTC / Local Currency rate we use, the total fee applied to the transaction as a percent, and the exact amount of local currency that the recipient receives
+      description: Returns the BTC / Local Currency rate we use, the total fee applied to the transaction as a percent, and the exact amount of local currency that the recipient receives
       properties:
         rate:
           type: number
@@ -197,50 +215,46 @@ components:
           type: number
           format: double
           example: 400.58
-        success:
-          type: boolean
-          example: true
           
     LnInvoiceRequest:
       type: object
       properties:
-        amount_btc:
-          type: number
-          format: double
-          example: .001
-        beneficary:
+        amountBtc:
+          type: string
+          example: 1000000
+        beneficiary:
           type: string
           example: Jose Medina
         clabe:
           type: string
           example: 139456293583293684
-        institution_name:
+        institutionName:
           type: string
           example: BBVA
         method:
           type: string
-          example: debit card
+          example: clabe
+        debitCard:
+          type: string
+          example: ""
+        phoneNumber:
+          type: string
+          example: ""
           
     LnInvoiceResponse:
       type: object
-      description: Returns whether the request was successful, the transactionId in our system and a Lightning invoice with a one minute expiry
+      description: Returns the transactionId in our system and a Lightning invoice with a one minute expiry
       properties:
-        success:
-          type: boolean
-          example: true
         txId:
           type: string
           example: "d3993-a59"
-        ln_invoice:
+        lnInvoice:
           type: string
           
     PaymentStatusResponse:
       type: object
-      description: Returns whether the request was successful, the transaction id in our system, and the payment status ('complete','pending', etc)
+      description: Returns the transaction id in our system, and the payment status ('complete','pending', etc)
       properties:
-        success:
-          type: boolean
-          example: true
         txId:
           type: string
           example: "d3993-a59"
@@ -250,33 +264,34 @@ components:
           
     VerifyBankAccountRequest:
       type: object
+      required:
+      - beneficiary
+      - institutionName
+      - method
       properties:
-        beneficary:
+        beneficiary:
           type: string
-          example: Jose Medina
+          example: "Jose Medina"
         clabe:
           type: string
-          example: "null"
-        institution_name:
+          example: ""
+        institutionName:
           type: string
           example: BBVA
         method:
           type: string
-          example: debit card
-        phone_number:
+          example: "debit card"
+        phoneNumber:
           type: string
-          example: "null"
-        debit_card:
+          example: ""
+        debitCard:
           type: string
-          example: 6920 3939 3929 4739
+          example: "3949 3939 9533 1039"
           
     VerifyBankAccountResponse:
       type: object
-      description: Returns whether the request was successful, whether the bank account was verified and a corresponding message like "successfully verified" or "incorrect clabe" in case of error
+      description: Returns whether the bank account was verified and a corresponding message like "successfully verified" or "incorrect clabe" in case of error
       properties:
-        success:
-          type: boolean
-          example: true
         verified: 
           type: boolean
           example: true
@@ -286,11 +301,8 @@ components:
           
     WithdrawalProvidersResponse:
       type: object
-      description: 'Returns whether the request was successful and a list of corresponding banks to which Relampago can send'
+      description: 'Returns a list of corresponding banks to which Relampago can send'
       properties:
-        success:
-          type: boolean
-          example: true
         payload:
           type: array
           items:
