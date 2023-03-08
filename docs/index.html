@@ -1282,7 +1282,7 @@ country code as per the ISO 3166-1 alpha-2 standard
                           <div class="tab-pane active" id="examples-Info-banksGet-0-curl">
                             <pre class="prettyprint"><code class="language-bsh">curl -X GET \
  -H "Accept: application/json" \
- "http://relampago.cash/api/v1/banks?countryCode=MX"
+ "http://api.relampago.cash/banks?countryCode=MX"
 </code></pre>
                           </div>
                         </div>
@@ -1409,7 +1409,7 @@ id of the transaction in our system
                           <div class="tab-pane active" id="examples-Orders-orderGet-0-curl">
                             <pre class="prettyprint"><code class="language-bsh">curl -X GET \
  -H "Accept: application/json" \
- "http://relampago.cash/api/v1/order?txId=d3993-a59"
+ "http://api.relampago.cash/order?txId=d3993-a59"
 </code></pre>
                           </div>
                         </div>
@@ -1544,7 +1544,7 @@ $(document).ready(function() {
                             <pre class="prettyprint"><code class="language-bsh">curl -X POST \
  -H "Accept: application/json" \
  -H "Content-Type: application/json" \
- "http://relampago.cash/api/v1/order" \
+ "http://api.relampago.cash/order" \
  -d '{
   &quot;phoneNumber&quot; : &quot;&quot;,
   &quot;beneficiary&quot; : &quot;Jose Medina&quot;,
@@ -1722,7 +1722,7 @@ the local fiat currency that the recipient receives
                           <div class="tab-pane active" id="examples-Rates-ratesGet-0-curl">
                             <pre class="prettyprint"><code class="language-bsh">curl -X GET \
  -H "Accept: application/json" \
- "http://relampago.cash/api/v1/rates?orgId=PlatapusCorp&amountBtc=1000000&fiat=mxn"
+ "http://api.relampago.cash/rates?orgId=PlatapusCorp&amountBtc=1000000&fiat=mxn"
 </code></pre>
                           </div>
                         </div>
@@ -1865,7 +1865,7 @@ $(document).ready(function() {
                             <pre class="prettyprint"><code class="language-bsh">curl -X POST \
  -H "Accept: application/json" \
  -H "Content-Type: application/json" \
- "http://relampago.cash/api/v1/verify" \
+ "http://api.relampago.cash/verify" \
  -d '{
   &quot;phoneNumber&quot; : &quot;&quot;,
   &quot;beneficiary&quot; : &quot;Jose Medina&quot;,
