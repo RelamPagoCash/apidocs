@@ -11,6 +11,56 @@ tags:
   - name: Verification
 
 paths:
+  /apikey:
+    get:
+      tags:
+        - Authentication
+      description: "Get a list of all the api keys corresponding to your organization"
+      summary: List All Api Keys
+
+      parameters:
+        - in: query
+          name: orgId
+          example: "PlatapusCorp"
+          schema:
+            type: string
+          required: true
+          description: id of the organization in our system
+              
+      responses:
+        '200':
+          description: The response returns an array of api keys, each containing the orgId, name and value
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListApiKeysResponse' 
+                
+  
+    post:
+      tags:
+        - Authentication
+      description: Generate an api key for your organization
+      summary: Generate Api Key
+      requestBody:
+        
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GenerateApiKeyRequest'
+            example:
+              orgId: PlatapusCorp
+              name: MannysKey
+              desc: do not delete my key
+              
+      responses:
+        '200':
+          description: Returns an api key object containing the name, description, orgId and value
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenerateApiKeyResponse'
+  
   /rates:
     get:
       tags:
@@ -28,20 +78,12 @@ paths:
           description: id of the organization in our system
 
         - in: query
-          name: amountBtc
+          name: satoshis
           example: 1000000
           schema:
-            type: string
+            type: integer
           required: true
           description: the amount of satoshis the remitter is sending
-
-        - in: query
-          name: fiat
-          example: mxn
-          schema:
-            type: string
-          required: true
-          description: the local fiat currency that the recipient receives
               
       responses:
         '200':
@@ -65,9 +107,12 @@ paths:
             schema:
               $ref: '#/components/schemas/VerifyBankAccountRequest'
             example:
-              beneficiary: Jose
-              institutionName: bank mexico
-              method: CLABE
+              beneficiary: Jose Medina
+              institutionName: Santander
+              method: clabe
+              phoneNumber: ""
+              debitCard: ""
+              institutionCode: "303"
               
       responses:
         '200':
@@ -201,16 +246,12 @@ components:
         - orgId
     GetRatesResponse:
       type: object
-      description: Returns the BTC / Local Currency rate we use, the total fee applied to the transaction as a percent, and the exact amount of local currency that the recipient receives
+      description: Returns the BTC / Local Currency rate we use, and the exact amount of local currency that the recipient receives
       properties:
         rate:
           type: number
           format: double
           example: 444239.39
-        fee:
-          type: number
-          format: double
-          example: 1.07
         recipientReceives:
           type: number
           format: double
@@ -219,27 +260,51 @@ components:
     LnInvoiceRequest:
       type: object
       properties:
-        amountBtc:
+        orgId:
           type: string
-          example: 1000000
-        beneficiary:
+          example: PlatapusCorp
+          
+        satoshis:
+          type: integer
+          example: 10000
+          
+        recipientInfo:
+          type: object
+          properties:
+            beneficiary:
+              type: string
+              example: Jose Medina
+            clabe:
+              type: string
+              example: 139456293583293684
+            institutionName:
+              type: string
+              example: BBVA
+            institutionCode:
+              type: string
+              example: 303
+            method:
+              type: string
+              example: clabe
+            debitCard:
+              type: string
+              example: ""
+            phoneNumber:
+              type: string
+              example: ""
+          
+    GenerateApiKeyRequest:
+      type: object
+      properties:
+        orgId:
           type: string
-          example: Jose Medina
-        clabe:
+          example: PlatapusCorp
+        name:
           type: string
-          example: 139456293583293684
-        institutionName:
+          example: MannysKey
+        desc:
           type: string
-          example: BBVA
-        method:
-          type: string
-          example: clabe
-        debitCard:
-          type: string
-          example: ""
-        phoneNumber:
-          type: string
-          example: ""
+          example: for testing cool apis
           
     LnInvoiceResponse:
       type: object
@@ -278,6 +343,9 @@ components:
         institutionName:
           type: string
           example: BBVA
+        institutionCode:
+          type: string
+          example: 303
         method:
           type: string
           example: "debit card"
@@ -287,6 +355,21 @@ components:
         debitCard:
           type: string
           example: "3949 3939 9533 1039"
+          
+          
+    GenerateApiKeyResponse:
+      type: object
+      description: Returns an api key object containing the name, description, orgId and value
+      properties:
+        orgId: 
+          type: string
+          example: PlatapusCorp
+        name:
+          type: string
+          example: MannysKey
+        value:
+          type: string
+          example: xd393hd9369954jdkkcnxi234eov39
           
     VerifyBankAccountResponse:
       type: object
@@ -299,11 +382,29 @@ components:
           type: string
           example: "successfully verified bank account info"
           
+    ListApiKeysResponse:
+      type: object
+      description: 'Returns a list of api keys corresponding to an organization'
+      properties:
+        keys:
+          type: array
+          items:
+            properties: 
+              orgId:
+                type: string
+                example: PlatapusCorp
+              name:
+                type: string
+                example: Mannys api key
+              value:
+                type: string
+                example: 949ms3dkdk392kwdkj39djfkk1003x86849
+          
     WithdrawalProvidersResponse:
       type: object
       description: 'Returns a list of corresponding banks to which Relampago can send'
       properties:
-        payload:
+        banks:
           type: array
           items:
             properties: 

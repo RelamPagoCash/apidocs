@@ -964,6 +964,41 @@ td .json-schema-view * {
   <script>
     // Script section to load models into a JS Var
     var defs = {}
+    defs["GenerateApiKeyRequest"] = {
+  "type" : "object",
+  "properties" : {
+    "orgId" : {
+      "type" : "string",
+      "example" : "PlatapusCorp"
+    },
+    "name" : {
+      "type" : "string",
+      "example" : "MannysKey"
+    },
+    "desc" : {
+      "type" : "string",
+      "example" : "for testing cool apis"
+    }
+  }
+};
+    defs["GenerateApiKeyResponse"] = {
+  "type" : "object",
+  "properties" : {
+    "orgId" : {
+      "type" : "string",
+      "example" : "PlatapusCorp"
+    },
+    "name" : {
+      "type" : "string",
+      "example" : "MannysKey"
+    },
+    "value" : {
+      "type" : "string",
+      "example" : "xd393hd9369954jdkkcnxi234eov39"
+    }
+  },
+  "description" : "Returns an api key object containing the name, description, orgId and value"
+};
     defs["GetRatesRequest"] = {
   "required" : [ "amountBtc", "id", "orgId" ],
   "type" : "object",
@@ -991,18 +1026,13 @@ td .json-schema-view * {
       "format" : "double",
       "example" : 444239.39
     },
-    "fee" : {
-      "type" : "number",
-      "format" : "double",
-      "example" : 1.07
-    },
     "recipientReceives" : {
       "type" : "number",
       "format" : "double",
       "example" : 400.58
     }
   },
-  "description" : "Returns the BTC / Local Currency rate we use, the total fee applied to the transaction as a percent, and the exact amount of local currency that the recipient receives"
+  "description" : "Returns the BTC / Local Currency rate we use, and the exact amount of local currency that the recipient receives"
 };
     defs["LightningInvoiceRequest"] = {
   "title" : "Lightning Invoice Request",
@@ -1029,13 +1059,50 @@ td .json-schema-view * {
   },
   "description" : "A lightning invoice request"
 };
+    defs["ListApiKeysResponse"] = {
+  "type" : "object",
+  "properties" : {
+    "keys" : {
+      "type" : "array",
+      "items" : {
+        "properties" : {
+          "orgId" : {
+            "type" : "string",
+            "example" : "PlatapusCorp"
+          },
+          "name" : {
+            "type" : "string",
+            "example" : "Mannys api key"
+          },
+          "value" : {
+            "type" : "string",
+            "example" : "949ms3dkdk392kwdkj39djfkk1003x86849"
+          }
+        }
+      }
+    }
+  },
+  "description" : "Returns a list of api keys corresponding to an organization"
+};
     defs["LnInvoiceRequest"] = {
   "type" : "object",
   "properties" : {
-    "amountBtc" : {
+    "orgId" : {
       "type" : "string",
-      "example" : "1000000"
+      "example" : "PlatapusCorp"
     },
+    "satoshis" : {
+      "type" : "integer",
+      "example" : 10000
+    },
+    "recipientInfo" : {
+      "$ref" : "#/components/schemas/LnInvoiceRequest_recipientInfo"
+    }
+  }
+};
+    defs["LnInvoiceRequest_recipientInfo"] = {
+  "type" : "object",
+  "properties" : {
     "beneficiary" : {
       "type" : "string",
       "example" : "Jose Medina"
@@ -1047,6 +1114,10 @@ td .json-schema-view * {
     "institutionName" : {
       "type" : "string",
       "example" : "BBVA"
+    },
+    "institutionCode" : {
+      "type" : "string",
+      "example" : "303"
     },
     "method" : {
       "type" : "string",
@@ -1115,6 +1186,10 @@ td .json-schema-view * {
       "type" : "string",
       "example" : "BBVA"
     },
+    "institutionCode" : {
+      "type" : "string",
+      "example" : "303"
+    },
     "method" : {
       "type" : "string",
       "example" : "debit card"
@@ -1146,7 +1221,7 @@ td .json-schema-view * {
     defs["WithdrawalProvidersResponse"] = {
   "type" : "object",
   "properties" : {
-    "payload" : {
+    "banks" : {
       "type" : "array",
       "items" : {
         "properties" : {
@@ -1187,6 +1262,13 @@ td .json-schema-view * {
             <img src="./relampago.png" class="icon"/>
             <li class="nav-fixed nav-header active" data-group="_"><a href="#top">API Summary</a></li>
 
+                  <li class="nav-category" data-group="Authentication"><a href="#api-Authentication">Authentication</a></li>
+                    <li data-group="Authentication" data-name="apikeyGet" class="sideItem">
+                      <a href="#api-Authentication-apikeyGet">List All Api Keys</a>
+                    </li>
+                    <li data-group="Authentication" data-name="apikeyPost" class="sideItem">
+                      <a href="#api-Authentication-apikeyPost">Generate Api Key</a>
+                    </li>
                   <li class="nav-category" data-group="Info"><a href="#api-Info">Info</a></li>
                     <li data-group="Info" data-name="banksGet" class="sideItem">
                       <a href="#api-Info-banksGet">Get Banks</a>
@@ -1229,6 +1311,278 @@ td .json-schema-view * {
         </div>
         <hr/>
         <div id="sections">
+                <section id="api-Authentication">
+                  <h1>Authentication</h1>
+                    <div id="api-Authentication-apikeyGet">
+                      <article id="api-Authentication-apikeyGet-0" data-group="User" data-name="apikeyGet" data-version="0">
+                        <div class="pull-left">
+                          <h1 class='apiHeader'>List All Api Keys</h1>
+                        </div>
+                        <div class="pull-right"></div>
+                        <div class="clearfix"></div>
+                        <p></p>
+                        <p class="marked">Get a list of all the api keys corresponding to your organization</p>
+                        <br/>
+                        <h3>Request Format</h3>
+                        <span><p class="language-html" data-type="get">get</p><p class="inlineBlock dullDark">/apikey</p></span>
+
+
+
+
+                            <h3 style="margin-top:10px;">Query Parameters</h3>
+                            <table id="methodsubtable">
+                              <tr>
+                                <th width="150px">Name</th>
+                                <th width="150px">Type</th>
+                                <th>Description</th>
+                              </tr>
+                                <tr><td style="width:150px;">orgId</td>
+<td style="width:150px;">
+    <span class="type">
+        String
+    </span>
+</td>
+<td>
+
+
+    <div id="d2e199_apikeyGet_orgId">
+        <div class="json-schema-view">
+            <div class="primitive">
+                    <div class="marked">
+id of the organization in our system
+                    </div>
+            </div>
+        </div>
+    </div>
+</td>
+</tr>
+
+                            </table>
+                        <br/>
+                        <h3 style="margin-bottom: 0px;">Usage</h3>
+                        <div class="tab-content" style="border: none; background-color: transparent;" >
+                          <div class="tab-pane active" id="examples-Authentication-apikeyGet-0-curl">
+                            <pre class="prettyprint"><code class="language-bsh">curl -X GET \
+ -H "Accept: application/json" \
+ "http://api.relampago.cash/apikey?orgId=PlatapusCorp"
+</code></pre>
+                          </div>
+                        </div>
+
+                            <h3>Response</h3>
+                            <p id="examples-Authentication-apikeyGet-description-200" class="marked"></p>
+                            <script>
+                              var responseAuthentication200_description = `The response returns an array of api keys, each containing the orgId, name and value`;
+                              var responseAuthentication200_description_break = responseAuthentication200_description.indexOf('\n');
+                              if (responseAuthentication200_description_break == -1) {
+                                $("#examples-Authentication-apikeyGet-title-200").text("Status: 200 - " + responseAuthentication200_description);
+                              } else {
+                                $("#examples-Authentication-apikeyGet-title-200").text("Status: 200 - " + responseAuthentication200_description.substring(0, responseAuthentication200_description_break));
+                                $("#examples-Authentication-apikeyGet-description-200").html(responseAuthentication200_description.substring(responseAuthentication200_description_break));
+                              }
+                            </script>
+                            <div class="tab-content" id="responses-Authentication-apikeyGet-200-wrapper" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-Authentication-apikeyGet-200-schema">
+                                  <div id="responses-Authentication-apikeyGet-schema-200" class="exampleStyle">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "The response returns an array of api keys, each containing the orgId, name and value",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/ListApiKeysResponse"
+      }
+    }
+  }
+};
+                                        var schema = findNode('schema',schemaWrapper).schema;
+                                        if (!schema) {
+                                          schema = schemaWrapper.schema;
+                                        }
+                                        
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else if (schema.items != null && schema.items.$ref != null) {
+                                            schema.items = defsParser.$refs.get(schema.items.$ref);
+                                        } else {
+                                          schemaWrapper.definitions = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //removes 'desc' attribute when passing to response so we don't get double descriptions
+                                        var modifiedSchema = structuredClone(schema);
+                                        modifiedSchema['description']=null;
+                                        //console.log('MODIFIED SCHEMA'+JSON.stringify(modifiedSchema));
+                                        modifiedSchema['desc']=null;
+                                        var view = new JSONSchemaView(modifiedSchema, 3);
+                                        $('#responses-Authentication-apikeyGet-200-schema-data').val(JSON.stringify(modifiedSchema));
+                                        //console.log("DESC "+schema['description']);
+                                        var result = $('#responses-Authentication-apikeyGet-schema-200');
+                                        result.empty();
+                                        let p=document.createElement("p");
+                                        p.append(schema.description);
+                                        console.log(schema);
+                                        result.append(p)
+                                        result.append(view.render());
+                    
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-Authentication-apikeyGet-200-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+                        </article>
+                      </div>
+                      <hr>
+                    <div id="api-Authentication-apikeyPost">
+                      <article id="api-Authentication-apikeyPost-0" data-group="User" data-name="apikeyPost" data-version="0">
+                        <div class="pull-left">
+                          <h1 class='apiHeader'>Generate Api Key</h1>
+                        </div>
+                        <div class="pull-right"></div>
+                        <div class="clearfix"></div>
+                        <p></p>
+                        <p class="marked">Generate an api key for your organization</p>
+                        <br/>
+                        <h3>Request Format</h3>
+                        <span><p class="language-html" data-type="post">post</p><p class="inlineBlock dullDark">/apikey</p></span>
+
+
+                            <h3 style="margin-top:10px;">Body</h3>
+                                <script>
+$(document).ready(function() {
+  var schemaWrapper = {
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/GenerateApiKeyRequest"
+      },
+      "example" : {
+        "orgId" : "PlatapusCorp",
+        "name" : "MannysKey",
+        "desc" : "do not delete my key"
+      }
+    }
+  },
+  "required" : true
+};
+
+  var schema = findNode('schema',schemaWrapper).schema;
+  if (!schema) {
+    schema = schemaWrapper.schema;
+  }
+  if (schema.$ref != null) {
+    schema = defsParser.$refs.get(schema.$ref);
+  } else {
+    schemaWrapper.definitions = Object.assign({}, defs);
+    $RefParser.dereference(schemaWrapper).catch(function(err) {
+      console.log(err);
+    });
+  }
+
+  var view = new JSONSchemaView(schema,2,{isBodyParam: true});
+  var result = $('#d2e199_apikeyPost_generateApiKeyRequest');
+  result.empty();
+  result.append(view.render());
+});
+</script>
+<div class="tab-content" id="responses-GenerateApiKeyRequest-apikeyPost--wrapper">
+    <div class="exampleStyle">
+        <div id="d2e199_apikeyPost_generateApiKeyRequest"></div>
+    </div>
+</div>
+
+
+
+                        <br/>
+                        <h3 style="margin-bottom: 0px;">Usage</h3>
+                        <div class="tab-content" style="border: none; background-color: transparent;" >
+                          <div class="tab-pane active" id="examples-Authentication-apikeyPost-0-curl">
+                            <pre class="prettyprint"><code class="language-bsh">curl -X POST \
+ -H "Accept: application/json" \
+ -H "Content-Type: application/json" \
+ "http://api.relampago.cash/apikey" \
+ -d '{
+  &quot;name&quot; : &quot;MannysKey&quot;,
+  &quot;orgId&quot; : &quot;PlatapusCorp&quot;,
+  &quot;desc&quot; : &quot;for testing cool apis&quot;
+}'
+</code></pre>
+                          </div>
+                        </div>
+
+                            <h3>Response</h3>
+                            <p id="examples-Authentication-apikeyPost-description-200" class="marked"></p>
+                            <script>
+                              var responseAuthentication200_description = `Returns an api key object containing the name, description, orgId and value`;
+                              var responseAuthentication200_description_break = responseAuthentication200_description.indexOf('\n');
+                              if (responseAuthentication200_description_break == -1) {
+                                $("#examples-Authentication-apikeyPost-title-200").text("Status: 200 - " + responseAuthentication200_description);
+                              } else {
+                                $("#examples-Authentication-apikeyPost-title-200").text("Status: 200 - " + responseAuthentication200_description.substring(0, responseAuthentication200_description_break));
+                                $("#examples-Authentication-apikeyPost-description-200").html(responseAuthentication200_description.substring(responseAuthentication200_description_break));
+                              }
+                            </script>
+                            <div class="tab-content" id="responses-Authentication-apikeyPost-200-wrapper" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-Authentication-apikeyPost-200-schema">
+                                  <div id="responses-Authentication-apikeyPost-schema-200" class="exampleStyle">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "Returns an api key object containing the name, description, orgId and value",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/GenerateApiKeyResponse"
+      }
+    }
+  }
+};
+                                        var schema = findNode('schema',schemaWrapper).schema;
+                                        if (!schema) {
+                                          schema = schemaWrapper.schema;
+                                        }
+                                        
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else if (schema.items != null && schema.items.$ref != null) {
+                                            schema.items = defsParser.$refs.get(schema.items.$ref);
+                                        } else {
+                                          schemaWrapper.definitions = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //removes 'desc' attribute when passing to response so we don't get double descriptions
+                                        var modifiedSchema = structuredClone(schema);
+                                        modifiedSchema['description']=null;
+                                        //console.log('MODIFIED SCHEMA'+JSON.stringify(modifiedSchema));
+                                        modifiedSchema['desc']=null;
+                                        var view = new JSONSchemaView(modifiedSchema, 3);
+                                        $('#responses-Authentication-apikeyPost-200-schema-data').val(JSON.stringify(modifiedSchema));
+                                        //console.log("DESC "+schema['description']);
+                                        var result = $('#responses-Authentication-apikeyPost-schema-200');
+                                        result.empty();
+                                        let p=document.createElement("p");
+                                        p.append(schema.description);
+                                        console.log(schema);
+                                        result.append(p)
+                                        result.append(view.render());
+                    
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-Authentication-apikeyPost-200-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+                        </article>
+                      </div>
+                      <hr>
+                  </section>
                 <section id="api-Info">
                   <h1>Info</h1>
                     <div id="api-Info-banksGet">
@@ -1546,13 +1900,17 @@ $(document).ready(function() {
  -H "Content-Type: application/json" \
  "http://api.relampago.cash/order" \
  -d '{
-  &quot;phoneNumber&quot; : &quot;&quot;,
-  &quot;beneficiary&quot; : &quot;Jose Medina&quot;,
-  &quot;method&quot; : &quot;clabe&quot;,
-  &quot;amountBtc&quot; : &quot;1000000&quot;,
-  &quot;institutionName&quot; : &quot;BBVA&quot;,
-  &quot;debitCard&quot; : &quot;&quot;,
-  &quot;clabe&quot; : &quot;139456293583293684&quot;
+  &quot;recipientInfo&quot; : {
+    &quot;phoneNumber&quot; : &quot;&quot;,
+    &quot;beneficiary&quot; : &quot;Jose Medina&quot;,
+    &quot;method&quot; : &quot;clabe&quot;,
+    &quot;institutionCode&quot; : &quot;303&quot;,
+    &quot;institutionName&quot; : &quot;BBVA&quot;,
+    &quot;debitCard&quot; : &quot;&quot;,
+    &quot;clabe&quot; : &quot;139456293583293684&quot;
+  },
+  &quot;orgId&quot; : &quot;PlatapusCorp&quot;,
+  &quot;satoshis&quot; : 10000
 }'
 </code></pre>
                           </div>
@@ -1673,41 +2031,20 @@ id of the organization in our system
 </td>
 </tr>
 
-                                <tr><td style="width:150px;">amountBtc</td>
+                                <tr><td style="width:150px;">satoshis</td>
 <td style="width:150px;">
     <span class="type">
-        String
+        Integer
     </span>
 </td>
 <td>
 
 
-    <div id="d2e199_ratesGet_amountBtc">
+    <div id="d2e199_ratesGet_satoshis">
         <div class="json-schema-view">
             <div class="primitive">
                     <div class="marked">
 the amount of satoshis the remitter is sending
-                    </div>
-            </div>
-        </div>
-    </div>
-</td>
-</tr>
-
-                                <tr><td style="width:150px;">fiat</td>
-<td style="width:150px;">
-    <span class="type">
-        String
-    </span>
-</td>
-<td>
-
-
-    <div id="d2e199_ratesGet_fiat">
-        <div class="json-schema-view">
-            <div class="primitive">
-                    <div class="marked">
-the local fiat currency that the recipient receives
                     </div>
             </div>
         </div>
@@ -1722,7 +2059,7 @@ the local fiat currency that the recipient receives
                           <div class="tab-pane active" id="examples-Rates-ratesGet-0-curl">
                             <pre class="prettyprint"><code class="language-bsh">curl -X GET \
  -H "Accept: application/json" \
- "http://api.relampago.cash/rates?orgId=PlatapusCorp&amountBtc=1000000&fiat=mxn"
+ "http://api.relampago.cash/rates?orgId=PlatapusCorp&satoshis=1000000"
 </code></pre>
                           </div>
                         </div>
@@ -1822,9 +2159,12 @@ $(document).ready(function() {
         "$ref" : "#/components/schemas/VerifyBankAccountRequest"
       },
       "example" : {
-        "beneficiary" : "Jose",
-        "institutionName" : "bank mexico",
-        "method" : "CLABE"
+        "beneficiary" : "Jose Medina",
+        "institutionName" : "Santander",
+        "method" : "clabe",
+        "phoneNumber" : "",
+        "debitCard" : "",
+        "institutionCode" : "303"
       }
     }
   },
@@ -1870,6 +2210,7 @@ $(document).ready(function() {
   &quot;phoneNumber&quot; : &quot;&quot;,
   &quot;beneficiary&quot; : &quot;Jose Medina&quot;,
   &quot;method&quot; : &quot;debit card&quot;,
+  &quot;institutionCode&quot; : &quot;303&quot;,
   &quot;institutionName&quot; : &quot;BBVA&quot;,
   &quot;debitCard&quot; : &quot;3949 3939 9533 1039&quot;,
   &quot;clabe&quot; : &quot;&quot;
