@@ -55,7 +55,7 @@ paths:
               
       responses:
         '200':
-          description: Returns an api key object containing the name, description, orgId and value
+          description: Returns an api key object containing the name, orgId and value
           content:
             application/json:
               schema:
@@ -359,7 +359,7 @@ components:
           
     GenerateApiKeyResponse:
       type: object
-      description: Returns an api key object containing the name, description, orgId and value
+      description: Returns an api key object containing the name, orgId and value
       properties:
         orgId: 
           type: string
