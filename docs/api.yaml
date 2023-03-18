@@ -84,7 +84,13 @@ paths:
             type: integer
           required: true
           description: the amount of satoshis the remitter is sending
-              
+        - name: x-api-key
+          in: header
+          required: true
+          schema: 
+            type: string
+          description: API key used for authentication
+          example: mannyKey
       responses:
         '200':
           description: Successful Response
@@ -92,6 +98,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetRatesResponse'  
+      security:
+        - x-api-key: []
   /verify:
     post:
       tags:
@@ -197,6 +205,11 @@ components:
             $ref: '#/components/schemas/LightningInvoiceRequest'
       description: List of user object
       required: true
+  securitySchemes:
+    x-api-key:
+      in: header
+      type: apiKey
+      name: x-api-key
   schemas:
     RequestLightningInvoicePayload:
       title: Lightning Invoice Request

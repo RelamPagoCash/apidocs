@@ -2000,6 +2000,35 @@ $(document).ready(function() {
                         <h3>Request Format</h3>
                         <span><p class="language-html" data-type="get">get</p><p class="inlineBlock dullDark">/rates</p></span>
 
+                            <h3 style="margin-top:10px;">Header Parameters</h3>
+                            <table id="methodsubtable">
+                              <tr>
+                                <th width="150px">Name</th>
+                                <th width="150px">Type</th>
+                                <th>Description</th>
+                              </tr>
+                                  <tr><td style="width:150px;">x-api-key</td>
+<td style="width:150px;">
+    <span class="type">
+        String
+    </span>
+</td>
+<td>
+
+
+    <div id="d2e199_ratesGet_xApiKey">
+        <div class="json-schema-view">
+            <div class="primitive">
+                    <div class="marked">
+API key used for authentication
+                    </div>
+            </div>
+        </div>
+    </div>
+</td>
+</tr>
+
+                            </table>
 
 
 
@@ -2058,6 +2087,7 @@ the amount of satoshis the remitter is sending
                         <div class="tab-content" style="border: none; background-color: transparent;" >
                           <div class="tab-pane active" id="examples-Rates-ratesGet-0-curl">
                             <pre class="prettyprint"><code class="language-bsh">curl -X GET \
+ -H "x-api-key: testKey" \
  -H "Accept: application/json" \
  "http://api.relampago.cash/rates?orgId=PlatapusCorp&satoshis=1000000"
 </code></pre>
