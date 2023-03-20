@@ -52,7 +52,6 @@ paths:
             example:
               orgId: PlatapusCorp
               name: MannysKey
-              desc: do not delete my key
               
       responses:
         '200':
@@ -360,9 +359,6 @@ components:
         name:
           type: string
           example: MannysKey
-        desc:
-          type: string
-          example: for testing cool apis
           
     LnInvoiceResponse:
       type: object
