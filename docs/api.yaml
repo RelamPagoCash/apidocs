@@ -1,6 +1,6 @@
 openapi: 3.0.1
 servers:
-  - url: 'http://api.relampago.cash/'
+  - url: 'https://api.relampago.cash/'
 info:
   description: These are specifications for using the Relampago API. Relampago allows for Bitcoin Lightning users to offramp their Lightning Bitcoin into any Mexican bank account over the SPEI network. Recipients can receive using a phone number, debit card, or a traditional bank account. Relampago offers instant settlement into MXN during work hours, and same-day settlement on weekends. Relampago maintains the service level agreement that once an invoice has been successfully generated for a valid user, and Lightning Bitcoin has been paid to the invoice, that peso amount will be successfully delivered to the user. 
   version: 1.0.0
@@ -15,7 +15,7 @@ paths:
     get:
       tags:
         - Authentication
-      description: "Get a list of all the api keys corresponding to your organization"
+      description: "Get a list of all the api keys corresponding to your organization. An organization can have at most five keys and each key must have a unique name."
       summary: List All Api Keys
 
       parameters:
@@ -41,6 +41,7 @@ paths:
         - Authentication
       description: Generate an api key for your organization
       summary: Generate Api Key
+      
       requestBody:
         
         required: true
@@ -107,6 +108,15 @@ paths:
       summary: Verify Recipient
       description: Verifies that a recipient's bank account info is valid. Depending on the method ("debit card", "phone number","clabe"), some fields will be required. For example for sending to a bank account, the "method", "clabe", "beneficiary", and "institutionName" field are required 
 
+      parameters:
+      - name: x-api-key
+        in: header
+        required: true
+        schema: 
+          type: string
+        description: API key used for authentication
+        example: mannyKey
+      
       requestBody:
         
         required: true
@@ -129,6 +139,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/VerifyBankAccountResponse'
+      security:
+        - x-api-key: []
   /order:
     get:
       tags:
@@ -144,6 +156,14 @@ paths:
             type: string
           required: true
           description: id of the transaction in our system
+
+        - name: x-api-key
+          in: header
+          required: true
+          schema: 
+            type: string
+          description: API key used for authentication
+          example: mannyKey
               
       responses:
         '200':
@@ -151,12 +171,24 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PaymentStatusResponse'    
+                $ref: '#/components/schemas/PaymentStatusResponse'  
+      security:
+        - x-api-key: []  
     post:
       tags:
         - Orders
       summary: Request Lightning Invoice
       description: Requests a lightning invoice to be generated for some end-user within the Mexican SPEI financial network. Relampago supports sending to a bank account (CLABE), a debit card, or a phone number.
+      
+      parameters:
+      - name: x-api-key
+        in: header
+        required: true
+        schema: 
+          type: string
+        description: API key used for authentication
+        example: mannyKey
+
       requestBody:
         required: true
         content:
@@ -171,12 +203,15 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/LnInvoiceResponse' 
+      security:
+        - x-api-key: []
   /banks:
     get:
       tags:
         - Info
       summary: Get Banks
       description: Returns a comprehensive list of banks to which we can send local currency 
+      
       parameters:
         - in: query
           name: countryCode
@@ -188,6 +223,14 @@ paths:
           required: true
           description: country code as per the ISO 3166-1 alpha-2 standard
           example: MX
+
+        - name: x-api-key
+          in: header
+          required: true
+          schema: 
+            type: string
+          description: API key used for authentication
+          example: mannyKey
               
       responses:
         '200':
@@ -196,6 +239,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/WithdrawalProvidersResponse'
+      security:
+        - x-api-key: []
 components:
   requestBodies:
     LightningInvoiceRequest:

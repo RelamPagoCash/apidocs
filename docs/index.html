@@ -1321,7 +1321,7 @@ td .json-schema-view * {
                         <div class="pull-right"></div>
                         <div class="clearfix"></div>
                         <p></p>
-                        <p class="marked">Get a list of all the api keys corresponding to your organization</p>
+                        <p class="marked">Get a list of all the api keys corresponding to your organization. An organization can have at most five keys and each key must have a unique name.</p>
                         <br/>
                         <h3>Request Format</h3>
                         <span><p class="language-html" data-type="get">get</p><p class="inlineBlock dullDark">/apikey</p></span>
@@ -1364,7 +1364,7 @@ id of the organization in our system
                           <div class="tab-pane active" id="examples-Authentication-apikeyGet-0-curl">
                             <pre class="prettyprint"><code class="language-bsh">curl -X GET \
  -H "Accept: application/json" \
- "http://api.relampago.cash/apikey?orgId=PlatapusCorp"
+ "https://api.relampago.cash/apikey?orgId=PlatapusCorp"
 </code></pre>
                           </div>
                         </div>
@@ -1504,7 +1504,7 @@ $(document).ready(function() {
                             <pre class="prettyprint"><code class="language-bsh">curl -X POST \
  -H "Accept: application/json" \
  -H "Content-Type: application/json" \
- "http://api.relampago.cash/apikey" \
+ "https://api.relampago.cash/apikey" \
  -d '{
   &quot;name&quot; : &quot;MannysKey&quot;,
   &quot;orgId&quot; : &quot;PlatapusCorp&quot;,
@@ -1598,6 +1598,35 @@ $(document).ready(function() {
                         <h3>Request Format</h3>
                         <span><p class="language-html" data-type="get">get</p><p class="inlineBlock dullDark">/banks</p></span>
 
+                            <h3 style="margin-top:10px;">Header Parameters</h3>
+                            <table id="methodsubtable">
+                              <tr>
+                                <th width="150px">Name</th>
+                                <th width="150px">Type</th>
+                                <th>Description</th>
+                              </tr>
+                                  <tr><td style="width:150px;">x-api-key</td>
+<td style="width:150px;">
+    <span class="type">
+        String
+    </span>
+</td>
+<td>
+
+
+    <div id="d2e199_banksGet_xApiKey">
+        <div class="json-schema-view">
+            <div class="primitive">
+                    <div class="marked">
+API key used for authentication
+                    </div>
+            </div>
+        </div>
+    </div>
+</td>
+</tr>
+
+                            </table>
 
 
 
@@ -1635,8 +1664,9 @@ country code as per the ISO 3166-1 alpha-2 standard
                         <div class="tab-content" style="border: none; background-color: transparent;" >
                           <div class="tab-pane active" id="examples-Info-banksGet-0-curl">
                             <pre class="prettyprint"><code class="language-bsh">curl -X GET \
+ -H "x-api-key: testKey" \
  -H "Accept: application/json" \
- "http://api.relampago.cash/banks?countryCode=MX"
+ "https://api.relampago.cash/banks?countryCode=MX"
 </code></pre>
                           </div>
                         </div>
@@ -1725,6 +1755,35 @@ country code as per the ISO 3166-1 alpha-2 standard
                         <h3>Request Format</h3>
                         <span><p class="language-html" data-type="get">get</p><p class="inlineBlock dullDark">/order</p></span>
 
+                            <h3 style="margin-top:10px;">Header Parameters</h3>
+                            <table id="methodsubtable">
+                              <tr>
+                                <th width="150px">Name</th>
+                                <th width="150px">Type</th>
+                                <th>Description</th>
+                              </tr>
+                                  <tr><td style="width:150px;">x-api-key</td>
+<td style="width:150px;">
+    <span class="type">
+        String
+    </span>
+</td>
+<td>
+
+
+    <div id="d2e199_orderGet_xApiKey">
+        <div class="json-schema-view">
+            <div class="primitive">
+                    <div class="marked">
+API key used for authentication
+                    </div>
+            </div>
+        </div>
+    </div>
+</td>
+</tr>
+
+                            </table>
 
 
 
@@ -1762,8 +1821,9 @@ id of the transaction in our system
                         <div class="tab-content" style="border: none; background-color: transparent;" >
                           <div class="tab-pane active" id="examples-Orders-orderGet-0-curl">
                             <pre class="prettyprint"><code class="language-bsh">curl -X GET \
+ -H "x-api-key: testKey" \
  -H "Accept: application/json" \
- "http://api.relampago.cash/order?txId=d3993-a59"
+ "https://api.relampago.cash/order?txId=d3993-a59"
 </code></pre>
                           </div>
                         </div>
@@ -1849,6 +1909,35 @@ id of the transaction in our system
                         <h3>Request Format</h3>
                         <span><p class="language-html" data-type="post">post</p><p class="inlineBlock dullDark">/order</p></span>
 
+                            <h3 style="margin-top:10px;">Header Parameters</h3>
+                            <table id="methodsubtable">
+                              <tr>
+                                <th width="150px">Name</th>
+                                <th width="150px">Type</th>
+                                <th>Description</th>
+                              </tr>
+                                  <tr><td style="width:150px;">x-api-key</td>
+<td style="width:150px;">
+    <span class="type">
+        String
+    </span>
+</td>
+<td>
+
+
+    <div id="d2e199_orderPost_xApiKey">
+        <div class="json-schema-view">
+            <div class="primitive">
+                    <div class="marked">
+API key used for authentication
+                    </div>
+            </div>
+        </div>
+    </div>
+</td>
+</tr>
+
+                            </table>
 
                             <h3 style="margin-top:10px;">Body</h3>
                                 <script>
@@ -1896,9 +1985,10 @@ $(document).ready(function() {
                         <div class="tab-content" style="border: none; background-color: transparent;" >
                           <div class="tab-pane active" id="examples-Orders-orderPost-0-curl">
                             <pre class="prettyprint"><code class="language-bsh">curl -X POST \
+ -H "x-api-key: testKey" \
  -H "Accept: application/json" \
  -H "Content-Type: application/json" \
- "http://api.relampago.cash/order" \
+ "https://api.relampago.cash/order" \
  -d '{
   &quot;recipientInfo&quot; : {
     &quot;phoneNumber&quot; : &quot;&quot;,
@@ -2089,7 +2179,7 @@ the amount of satoshis the remitter is sending
                             <pre class="prettyprint"><code class="language-bsh">curl -X GET \
  -H "x-api-key: testKey" \
  -H "Accept: application/json" \
- "http://api.relampago.cash/rates?orgId=PlatapusCorp&satoshis=1000000"
+ "https://api.relampago.cash/rates?orgId=PlatapusCorp&satoshis=1000000"
 </code></pre>
                           </div>
                         </div>
@@ -2178,6 +2268,35 @@ the amount of satoshis the remitter is sending
                         <h3>Request Format</h3>
                         <span><p class="language-html" data-type="post">post</p><p class="inlineBlock dullDark">/verify</p></span>
 
+                            <h3 style="margin-top:10px;">Header Parameters</h3>
+                            <table id="methodsubtable">
+                              <tr>
+                                <th width="150px">Name</th>
+                                <th width="150px">Type</th>
+                                <th>Description</th>
+                              </tr>
+                                  <tr><td style="width:150px;">x-api-key</td>
+<td style="width:150px;">
+    <span class="type">
+        String
+    </span>
+</td>
+<td>
+
+
+    <div id="d2e199_verifyPost_xApiKey">
+        <div class="json-schema-view">
+            <div class="primitive">
+                    <div class="marked">
+API key used for authentication
+                    </div>
+            </div>
+        </div>
+    </div>
+</td>
+</tr>
+
+                            </table>
 
                             <h3 style="margin-top:10px;">Body</h3>
                                 <script>
@@ -2233,9 +2352,10 @@ $(document).ready(function() {
                         <div class="tab-content" style="border: none; background-color: transparent;" >
                           <div class="tab-pane active" id="examples-Verification-verifyPost-0-curl">
                             <pre class="prettyprint"><code class="language-bsh">curl -X POST \
+ -H "x-api-key: testKey" \
  -H "Accept: application/json" \
  -H "Content-Type: application/json" \
- "http://api.relampago.cash/verify" \
+ "https://api.relampago.cash/verify" \
  -d '{
   &quot;phoneNumber&quot; : &quot;&quot;,
   &quot;beneficiary&quot; : &quot;Jose Medina&quot;,
