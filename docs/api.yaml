@@ -408,7 +408,7 @@ components:
           example: ""
         debitCard:
           type: string
-          example: "3949 3939 9533 1039"
+          example: "3949393995331039"
           
           
     GenerateApiKeyResponse:
