@@ -402,7 +402,7 @@ components:
           example: 303
         method:
           type: string
-          example: "debit card"
+          example: "debitCard"
         phoneNumber:
           type: string
           example: ""
