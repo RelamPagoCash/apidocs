@@ -39,7 +39,7 @@ paths:
     post:
       tags:
         - Authentication
-      description: Generate an api key for your organization
+      description: Generate an api key for your organization. After creating a key, it takes about 3-5 minutes for it to be enabled.
       summary: Generate Api Key
       
       requestBody:
@@ -105,7 +105,7 @@ paths:
       tags:
         - Verification
       summary: Verify Recipient
-      description: Verifies that a recipient's bank account info is valid. Depending on the method ("debit card", "phone number","clabe"), some fields will be required. For example for sending to a bank account, the "method", "clabe", "beneficiary", and "institutionName" field are required 
+      description: Verifies that a recipient's bank account info is valid. Depending on the method ("debitCard", "phoneNumber","clabe"), some fields will be required. For example for sending to a bank account, the "method", "clabe", "beneficiary", and "institutionName" field are required.
 
       parameters:
       - name: x-api-key
@@ -177,7 +177,7 @@ paths:
       tags:
         - Orders
       summary: Request Lightning Invoice
-      description: Requests a lightning invoice to be generated for some end-user within the Mexican SPEI financial network. Relampago supports sending to a bank account (CLABE), a debit card, or a phone number.
+      description: Requests a lightning invoice to be generated for some end-user within the Mexican SPEI financial network. Relampago supports sending to a bank account (CLABE), a debit card, or a phone number. Depending on the method ("debitCard", "phoneNumber","clabe"), some fields will be required. For example for sending to a bank account, the "method", "clabe", "beneficiary", and "institutionName" field are required.
       
       parameters:
       - name: x-api-key
