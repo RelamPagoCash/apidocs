@@ -333,7 +333,7 @@ components:
               example: Jose Medina
             clabe:
               type: string
-              example: 139456293583293684
+              example: 646180110400000007
             institutionName:
               type: string
               example: BBVA
