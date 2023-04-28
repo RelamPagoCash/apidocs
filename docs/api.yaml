@@ -12,29 +12,6 @@ tags:
 
 paths:
   /apikey:
-    get:
-      tags:
-        - Authentication
-      description: "Get a list of all the api keys corresponding to your organization. An organization can have at most five keys and each key must have a unique name."
-      summary: List All Api Keys
-
-      parameters:
-        - in: query
-          name: orgId
-          example: "PlatapusCorp"
-          schema:
-            type: string
-          required: true
-          description: id of the organization in our system
-              
-      responses:
-        '200':
-          description: The response returns an array of api keys, each containing the orgId, name and value
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ListApiKeysResponse' 
-                
   
     post:
       tags:
@@ -61,45 +38,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/GenerateApiKeyResponse'
   
-  /rates:
-    get:
-      tags:
-        - Rates
-      summary: Get Rates Info
-      description: Returns info about our BTC/local currency rates and transaction fees
-
-      parameters:
-        - in: query
-          name: orgId
-          example: "PlatapusCorp"
-          schema:
-            type: string
-          required: true
-          description: id of the organization in our system
-
-        - in: query
-          name: satoshis
-          example: 1000000
-          schema:
-            type: integer
-          required: true
-          description: the amount of satoshis the remitter is sending
-        - name: x-api-key
-          in: header
-          required: true
-          schema: 
-            type: string
-          description: API key used for authentication
-          example: mannyKey
-      responses:
-        '200':
-          description: Successful Response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GetRatesResponse'  
-      security:
-        - x-api-key: []
   /verify:
     post:
       tags:
@@ -141,38 +79,6 @@ paths:
       security:
         - x-api-key: []
   /order:
-    get:
-      tags:
-        - Orders
-      summary: Get Order Status
-      description: Returns the status of the payment after we've received a paid LN invoice
-
-      parameters:
-        - in: query
-          name: txId
-          example: "d3993-a59"
-          schema:
-            type: string
-          required: true
-          description: id of the transaction in our system
-
-        - name: x-api-key
-          in: header
-          required: true
-          schema: 
-            type: string
-          description: API key used for authentication
-          example: mannyKey
-              
-      responses:
-        '200':
-          description: Sucessful Response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PaymentStatusResponse'  
-      security:
-        - x-api-key: []  
     post:
       tags:
         - Orders
@@ -317,9 +223,6 @@ components:
     LnInvoiceRequest:
       type: object
       properties:
-        orgId:
-          type: string
-          example: PlatapusCorp
           
         satoshis:
           type: integer
@@ -415,9 +318,9 @@ components:
       type: object
       description: Returns an api key object containing the name, orgId and value
       properties:
-        orgId: 
+        id: 
           type: string
-          example: PlatapusCorp
+          example: a39-39dsfs2992dkk39
         name:
           type: string
           example: MannysKey

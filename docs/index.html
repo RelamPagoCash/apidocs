@@ -980,9 +980,9 @@ td .json-schema-view * {
     defs["GenerateApiKeyResponse"] = {
   "type" : "object",
   "properties" : {
-    "orgId" : {
+    "id" : {
       "type" : "string",
-      "example" : "PlatapusCorp"
+      "example" : "a39-39dsfs2992dkk39"
     },
     "name" : {
       "type" : "string",
@@ -1083,10 +1083,6 @@ td .json-schema-view * {
     defs["LnInvoiceRequest"] = {
   "type" : "object",
   "properties" : {
-    "orgId" : {
-      "type" : "string",
-      "example" : "PlatapusCorp"
-    },
     "satoshis" : {
       "type" : "integer",
       "example" : 10000
@@ -1259,9 +1255,6 @@ td .json-schema-view * {
             <li class="nav-fixed nav-header active" data-group="_"><a href="#top">API Summary</a></li>
 
                   <li class="nav-category" data-group="Authentication"><a href="#api-Authentication">Authentication</a></li>
-                    <li data-group="Authentication" data-name="apikeyGet" class="sideItem">
-                      <a href="#api-Authentication-apikeyGet">List All Api Keys</a>
-                    </li>
                     <li data-group="Authentication" data-name="apikeyPost" class="sideItem">
                       <a href="#api-Authentication-apikeyPost">Generate Api Key</a>
                     </li>
@@ -1270,15 +1263,8 @@ td .json-schema-view * {
                       <a href="#api-Info-banksGet">Get Banks</a>
                     </li>
                   <li class="nav-category" data-group="Orders"><a href="#api-Orders">Orders</a></li>
-                    <li data-group="Orders" data-name="orderGet" class="sideItem">
-                      <a href="#api-Orders-orderGet">Get Order Status</a>
-                    </li>
                     <li data-group="Orders" data-name="orderPost" class="sideItem">
                       <a href="#api-Orders-orderPost">Request Lightning Invoice</a>
-                    </li>
-                  <li class="nav-category" data-group="Rates"><a href="#api-Rates">Rates</a></li>
-                    <li data-group="Rates" data-name="ratesGet" class="sideItem">
-                      <a href="#api-Rates-ratesGet">Get Rates Info</a>
                     </li>
                   <li class="nav-category" data-group="Verification"><a href="#api-Verification">Verification</a></li>
                     <li data-group="Verification" data-name="verifyPost" class="sideItem">
@@ -1309,130 +1295,6 @@ td .json-schema-view * {
         <div id="sections">
                 <section id="api-Authentication">
                   <h1>Authentication</h1>
-                    <div id="api-Authentication-apikeyGet">
-                      <article id="api-Authentication-apikeyGet-0" data-group="User" data-name="apikeyGet" data-version="0">
-                        <div class="pull-left">
-                          <h1 class='apiHeader'>List All Api Keys</h1>
-                        </div>
-                        <div class="pull-right"></div>
-                        <div class="clearfix"></div>
-                        <p></p>
-                        <p class="marked">Get a list of all the api keys corresponding to your organization. An organization can have at most five keys and each key must have a unique name.</p>
-                        <br/>
-                        <h3>Request Format</h3>
-                        <span><p class="language-html" data-type="get">get</p><p class="inlineBlock dullDark">/apikey</p></span>
-
-
-
-
-                            <h3 style="margin-top:10px;">Query Parameters</h3>
-                            <table id="methodsubtable">
-                              <tr>
-                                <th width="150px">Name</th>
-                                <th width="150px">Type</th>
-                                <th>Description</th>
-                              </tr>
-                                <tr><td style="width:150px;">orgId</td>
-<td style="width:150px;">
-    <span class="type">
-        String
-    </span>
-</td>
-<td>
-
-
-    <div id="d2e199_apikeyGet_orgId">
-        <div class="json-schema-view">
-            <div class="primitive">
-                    <div class="marked">
-id of the organization in our system
-                    </div>
-            </div>
-        </div>
-    </div>
-</td>
-</tr>
-
-                            </table>
-                        <br/>
-                        <h3 style="margin-bottom: 0px;">Usage</h3>
-                        <div class="tab-content" style="border: none; background-color: transparent;" >
-                          <div class="tab-pane active" id="examples-Authentication-apikeyGet-0-curl">
-                            <pre class="prettyprint"><code class="language-bsh">curl -X GET \
- -H "Accept: application/json" \
- "https://api.relampago.cash/apikey?orgId=PlatapusCorp"
-</code></pre>
-                          </div>
-                        </div>
-
-                            <h3>Response</h3>
-                            <p id="examples-Authentication-apikeyGet-description-200" class="marked"></p>
-                            <script>
-                              var responseAuthentication200_description = `The response returns an array of api keys, each containing the orgId, name and value`;
-                              var responseAuthentication200_description_break = responseAuthentication200_description.indexOf('\n');
-                              if (responseAuthentication200_description_break == -1) {
-                                $("#examples-Authentication-apikeyGet-title-200").text("Status: 200 - " + responseAuthentication200_description);
-                              } else {
-                                $("#examples-Authentication-apikeyGet-title-200").text("Status: 200 - " + responseAuthentication200_description.substring(0, responseAuthentication200_description_break));
-                                $("#examples-Authentication-apikeyGet-description-200").html(responseAuthentication200_description.substring(responseAuthentication200_description_break));
-                              }
-                            </script>
-                            <div class="tab-content" id="responses-Authentication-apikeyGet-200-wrapper" style='margin-bottom: 10px;'>
-                                <div class="tab-pane active" id="responses-Authentication-apikeyGet-200-schema">
-                                  <div id="responses-Authentication-apikeyGet-schema-200" class="exampleStyle">
-                                    <script>
-                                      $(document).ready(function() {
-                                        var schemaWrapper = {
-  "description" : "The response returns an array of api keys, each containing the orgId, name and value",
-  "content" : {
-    "application/json" : {
-      "schema" : {
-        "$ref" : "#/components/schemas/ListApiKeysResponse"
-      }
-    }
-  }
-};
-                                        var schema = findNode('schema',schemaWrapper).schema;
-                                        if (!schema) {
-                                          schema = schemaWrapper.schema;
-                                        }
-                                        
-                                        if (schema.$ref != null) {
-                                          schema = defsParser.$refs.get(schema.$ref);
-                                        } else if (schema.items != null && schema.items.$ref != null) {
-                                            schema.items = defsParser.$refs.get(schema.items.$ref);
-                                        } else {
-                                          schemaWrapper.definitions = Object.assign({}, defs);
-                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
-                                            console.log(err);
-                                          });
-                                        }
-
-                                        //removes 'desc' attribute when passing to response so we don't get double descriptions
-                                        var modifiedSchema = structuredClone(schema);
-                                        modifiedSchema['description']=null;
-                                        //console.log('MODIFIED SCHEMA'+JSON.stringify(modifiedSchema));
-                                        modifiedSchema['desc']=null;
-                                        var view = new JSONSchemaView(modifiedSchema, 3);
-                                        $('#responses-Authentication-apikeyGet-200-schema-data').val(JSON.stringify(modifiedSchema));
-                                        //console.log("DESC "+schema['description']);
-                                        var result = $('#responses-Authentication-apikeyGet-schema-200');
-                                        result.empty();
-                                        let p=document.createElement("p");
-                                        p.append(schema.description);
-                                        console.log(schema);
-                                        result.append(p)
-                                        result.append(view.render());
-                    
-                                      });
-                                    </script>
-                                  </div>
-                                  <input id='responses-Authentication-apikeyGet-200-schema-data' type='hidden' value=''></input>
-                                </div>
-                            </div>
-                        </article>
-                      </div>
-                      <hr>
                     <div id="api-Authentication-apikeyPost">
                       <article id="api-Authentication-apikeyPost-0" data-group="User" data-name="apikeyPost" data-version="0">
                         <div class="pull-left">
@@ -1736,160 +1598,6 @@ country code as per the ISO 3166-1 alpha-2 standard
                   </section>
                 <section id="api-Orders">
                   <h1>Orders</h1>
-                    <div id="api-Orders-orderGet">
-                      <article id="api-Orders-orderGet-0" data-group="User" data-name="orderGet" data-version="0">
-                        <div class="pull-left">
-                          <h1 class='apiHeader'>Get Order Status</h1>
-                        </div>
-                        <div class="pull-right"></div>
-                        <div class="clearfix"></div>
-                        <p></p>
-                        <p class="marked">Returns the status of the payment after we&#39;ve received a paid LN invoice</p>
-                        <br/>
-                        <h3>Request Format</h3>
-                        <span><p class="language-html" data-type="get">get</p><p class="inlineBlock dullDark">/order</p></span>
-
-                            <h3 style="margin-top:10px;">Header Parameters</h3>
-                            <table id="methodsubtable">
-                              <tr>
-                                <th width="150px">Name</th>
-                                <th width="150px">Type</th>
-                                <th>Description</th>
-                              </tr>
-                                  <tr><td style="width:150px;">x-api-key</td>
-<td style="width:150px;">
-    <span class="type">
-        String
-    </span>
-</td>
-<td>
-
-
-    <div id="d2e199_orderGet_xApiKey">
-        <div class="json-schema-view">
-            <div class="primitive">
-                    <div class="marked">
-API key used for authentication
-                    </div>
-            </div>
-        </div>
-    </div>
-</td>
-</tr>
-
-                            </table>
-
-
-
-                            <h3 style="margin-top:10px;">Query Parameters</h3>
-                            <table id="methodsubtable">
-                              <tr>
-                                <th width="150px">Name</th>
-                                <th width="150px">Type</th>
-                                <th>Description</th>
-                              </tr>
-                                <tr><td style="width:150px;">txId</td>
-<td style="width:150px;">
-    <span class="type">
-        String
-    </span>
-</td>
-<td>
-
-
-    <div id="d2e199_orderGet_txId">
-        <div class="json-schema-view">
-            <div class="primitive">
-                    <div class="marked">
-id of the transaction in our system
-                    </div>
-            </div>
-        </div>
-    </div>
-</td>
-</tr>
-
-                            </table>
-                        <br/>
-                        <h3 style="margin-bottom: 0px;">Usage</h3>
-                        <div class="tab-content" style="border: none; background-color: transparent;" >
-                          <div class="tab-pane active" id="examples-Orders-orderGet-0-curl">
-                            <pre class="prettyprint"><code class="language-bsh">curl -X GET \
- -H "x-api-key: testKey" \
- -H "Accept: application/json" \
- "https://api.relampago.cash/order?txId=d3993-a59"
-</code></pre>
-                          </div>
-                        </div>
-
-                            <h3>Response</h3>
-                            <p id="examples-Orders-orderGet-description-200" class="marked"></p>
-                            <script>
-                              var responseOrders200_description = `Sucessful Response`;
-                              var responseOrders200_description_break = responseOrders200_description.indexOf('\n');
-                              if (responseOrders200_description_break == -1) {
-                                $("#examples-Orders-orderGet-title-200").text("Status: 200 - " + responseOrders200_description);
-                              } else {
-                                $("#examples-Orders-orderGet-title-200").text("Status: 200 - " + responseOrders200_description.substring(0, responseOrders200_description_break));
-                                $("#examples-Orders-orderGet-description-200").html(responseOrders200_description.substring(responseOrders200_description_break));
-                              }
-                            </script>
-                            <div class="tab-content" id="responses-Orders-orderGet-200-wrapper" style='margin-bottom: 10px;'>
-                                <div class="tab-pane active" id="responses-Orders-orderGet-200-schema">
-                                  <div id="responses-Orders-orderGet-schema-200" class="exampleStyle">
-                                    <script>
-                                      $(document).ready(function() {
-                                        var schemaWrapper = {
-  "description" : "Sucessful Response",
-  "content" : {
-    "application/json" : {
-      "schema" : {
-        "$ref" : "#/components/schemas/PaymentStatusResponse"
-      }
-    }
-  }
-};
-                                        var schema = findNode('schema',schemaWrapper).schema;
-                                        if (!schema) {
-                                          schema = schemaWrapper.schema;
-                                        }
-                                        
-                                        if (schema.$ref != null) {
-                                          schema = defsParser.$refs.get(schema.$ref);
-                                        } else if (schema.items != null && schema.items.$ref != null) {
-                                            schema.items = defsParser.$refs.get(schema.items.$ref);
-                                        } else {
-                                          schemaWrapper.definitions = Object.assign({}, defs);
-                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
-                                            console.log(err);
-                                          });
-                                        }
-
-                                        //removes 'desc' attribute when passing to response so we don't get double descriptions
-                                        var modifiedSchema = structuredClone(schema);
-                                        modifiedSchema['description']=null;
-                                        //console.log('MODIFIED SCHEMA'+JSON.stringify(modifiedSchema));
-                                        modifiedSchema['desc']=null;
-                                        var view = new JSONSchemaView(modifiedSchema, 3);
-                                        $('#responses-Orders-orderGet-200-schema-data').val(JSON.stringify(modifiedSchema));
-                                        //console.log("DESC "+schema['description']);
-                                        var result = $('#responses-Orders-orderGet-schema-200');
-                                        result.empty();
-                                        let p=document.createElement("p");
-                                        p.append(schema.description);
-                                        console.log(schema);
-                                        result.append(p)
-                                        result.append(view.render());
-                    
-                                      });
-                                    </script>
-                                  </div>
-                                  <input id='responses-Orders-orderGet-200-schema-data' type='hidden' value=''></input>
-                                </div>
-                            </div>
-                        </article>
-                      </div>
-                      <hr>
                     <div id="api-Orders-orderPost">
                       <article id="api-Orders-orderPost-0" data-group="User" data-name="orderPost" data-version="0">
                         <div class="pull-left">
@@ -1993,7 +1701,6 @@ $(document).ready(function() {
     &quot;debitCard&quot; : &quot;&quot;,
     &quot;clabe&quot; : &quot;646180110400000007&quot;
   },
-  &quot;orgId&quot; : &quot;PlatapusCorp&quot;,
   &quot;satoshis&quot; : 10000
 }'
 </code></pre>
@@ -2063,184 +1770,6 @@ $(document).ready(function() {
                                     </script>
                                   </div>
                                   <input id='responses-Orders-orderPost-200-schema-data' type='hidden' value=''></input>
-                                </div>
-                            </div>
-                        </article>
-                      </div>
-                      <hr>
-                  </section>
-                <section id="api-Rates">
-                  <h1>Rates</h1>
-                    <div id="api-Rates-ratesGet">
-                      <article id="api-Rates-ratesGet-0" data-group="User" data-name="ratesGet" data-version="0">
-                        <div class="pull-left">
-                          <h1 class='apiHeader'>Get Rates Info</h1>
-                        </div>
-                        <div class="pull-right"></div>
-                        <div class="clearfix"></div>
-                        <p></p>
-                        <p class="marked">Returns info about our BTC/local currency rates and transaction fees</p>
-                        <br/>
-                        <h3>Request Format</h3>
-                        <span><p class="language-html" data-type="get">get</p><p class="inlineBlock dullDark">/rates</p></span>
-
-                            <h3 style="margin-top:10px;">Header Parameters</h3>
-                            <table id="methodsubtable">
-                              <tr>
-                                <th width="150px">Name</th>
-                                <th width="150px">Type</th>
-                                <th>Description</th>
-                              </tr>
-                                  <tr><td style="width:150px;">x-api-key</td>
-<td style="width:150px;">
-    <span class="type">
-        String
-    </span>
-</td>
-<td>
-
-
-    <div id="d2e199_ratesGet_xApiKey">
-        <div class="json-schema-view">
-            <div class="primitive">
-                    <div class="marked">
-API key used for authentication
-                    </div>
-            </div>
-        </div>
-    </div>
-</td>
-</tr>
-
-                            </table>
-
-
-
-                            <h3 style="margin-top:10px;">Query Parameters</h3>
-                            <table id="methodsubtable">
-                              <tr>
-                                <th width="150px">Name</th>
-                                <th width="150px">Type</th>
-                                <th>Description</th>
-                              </tr>
-                                <tr><td style="width:150px;">orgId</td>
-<td style="width:150px;">
-    <span class="type">
-        String
-    </span>
-</td>
-<td>
-
-
-    <div id="d2e199_ratesGet_orgId">
-        <div class="json-schema-view">
-            <div class="primitive">
-                    <div class="marked">
-id of the organization in our system
-                    </div>
-            </div>
-        </div>
-    </div>
-</td>
-</tr>
-
-                                <tr><td style="width:150px;">satoshis</td>
-<td style="width:150px;">
-    <span class="type">
-        Integer
-    </span>
-</td>
-<td>
-
-
-    <div id="d2e199_ratesGet_satoshis">
-        <div class="json-schema-view">
-            <div class="primitive">
-                    <div class="marked">
-the amount of satoshis the remitter is sending
-                    </div>
-            </div>
-        </div>
-    </div>
-</td>
-</tr>
-
-                            </table>
-                        <br/>
-                        <h3 style="margin-bottom: 0px;">Usage</h3>
-                        <div class="tab-content" style="border: none; background-color: transparent;" >
-                          <div class="tab-pane active" id="examples-Rates-ratesGet-0-curl">
-                            <pre class="prettyprint"><code class="language-bsh">curl -X GET \
- -H "x-api-key: testKey" \
- -H "Accept: application/json" \
- "https://api.relampago.cash/rates?orgId=PlatapusCorp&satoshis=1000000"
-</code></pre>
-                          </div>
-                        </div>
-
-                            <h3>Response</h3>
-                            <p id="examples-Rates-ratesGet-description-200" class="marked"></p>
-                            <script>
-                              var responseRates200_description = `Successful Response`;
-                              var responseRates200_description_break = responseRates200_description.indexOf('\n');
-                              if (responseRates200_description_break == -1) {
-                                $("#examples-Rates-ratesGet-title-200").text("Status: 200 - " + responseRates200_description);
-                              } else {
-                                $("#examples-Rates-ratesGet-title-200").text("Status: 200 - " + responseRates200_description.substring(0, responseRates200_description_break));
-                                $("#examples-Rates-ratesGet-description-200").html(responseRates200_description.substring(responseRates200_description_break));
-                              }
-                            </script>
-                            <div class="tab-content" id="responses-Rates-ratesGet-200-wrapper" style='margin-bottom: 10px;'>
-                                <div class="tab-pane active" id="responses-Rates-ratesGet-200-schema">
-                                  <div id="responses-Rates-ratesGet-schema-200" class="exampleStyle">
-                                    <script>
-                                      $(document).ready(function() {
-                                        var schemaWrapper = {
-  "description" : "Successful Response",
-  "content" : {
-    "application/json" : {
-      "schema" : {
-        "$ref" : "#/components/schemas/GetRatesResponse"
-      }
-    }
-  }
-};
-                                        var schema = findNode('schema',schemaWrapper).schema;
-                                        if (!schema) {
-                                          schema = schemaWrapper.schema;
-                                        }
-                                        
-                                        if (schema.$ref != null) {
-                                          schema = defsParser.$refs.get(schema.$ref);
-                                        } else if (schema.items != null && schema.items.$ref != null) {
-                                            schema.items = defsParser.$refs.get(schema.items.$ref);
-                                        } else {
-                                          schemaWrapper.definitions = Object.assign({}, defs);
-                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
-                                            console.log(err);
-                                          });
-                                        }
-
-                                        //removes 'desc' attribute when passing to response so we don't get double descriptions
-                                        var modifiedSchema = structuredClone(schema);
-                                        modifiedSchema['description']=null;
-                                        //console.log('MODIFIED SCHEMA'+JSON.stringify(modifiedSchema));
-                                        modifiedSchema['desc']=null;
-                                        var view = new JSONSchemaView(modifiedSchema, 3);
-                                        $('#responses-Rates-ratesGet-200-schema-data').val(JSON.stringify(modifiedSchema));
-                                        //console.log("DESC "+schema['description']);
-                                        var result = $('#responses-Rates-ratesGet-schema-200');
-                                        result.empty();
-                                        let p=document.createElement("p");
-                                        p.append(schema.description);
-                                        console.log(schema);
-                                        result.append(p)
-                                        result.append(view.render());
-                    
-                                      });
-                                    </script>
-                                  </div>
-                                  <input id='responses-Rates-ratesGet-200-schema-data' type='hidden' value=''></input>
                                 </div>
                             </div>
                         </article>
